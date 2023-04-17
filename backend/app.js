@@ -46,12 +46,8 @@ if (!isProduction) {
     })
   );
 
-  //for testing
-  app.get('/spots', async (req, res) => {
-    const { Spot } = require('../backend/db/models');
-    const spots = await Spot.findAll();
-    res.json(spots)
-  })
+
+
 
   app.use(routes); // Connect all the routes
 
