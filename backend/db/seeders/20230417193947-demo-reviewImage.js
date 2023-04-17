@@ -1,7 +1,7 @@
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-
+const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 let options = {};
 options.tableName = 'ReviewImages';

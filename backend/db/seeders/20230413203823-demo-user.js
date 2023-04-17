@@ -2,7 +2,7 @@
 const bcrypt = require("bcryptjs");
 
 /** @type {import('sequelize-cli').Migration} */
-
+const Sequelize = require('sequelize');
 let options = {};
 options.tableName = 'Users';
 if (process.env.NODE_ENV === 'production') {
