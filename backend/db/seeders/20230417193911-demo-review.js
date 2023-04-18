@@ -16,17 +16,20 @@ module.exports = {
     {
       spotId: 1,
       userId: 3,
-      review: 'This place was the worst. Avoid at all costs.'
+      review: 'This place was the worst. Avoid at all costs.',
+      stars: 3
     },
     {
       spotId: 2,
       userId: 1,
-      review: 'Excellent host. Would recommend.'
+      review: 'Excellent host. Would recommend.',
+      stars: 4
     },
     {
       spotId: 3,
       userId: 2,
-      review: 'This was a literal van. I mean what the heck?!'
+      review: 'This was a literal van. I mean what the heck?!',
+      stars: 2
     }
    ], options)
   },
