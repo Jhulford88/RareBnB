@@ -1,0 +1,13 @@
+node_modules
+.env
+build
+.DS_Store
+*.db
+README-backend-phase-0.md
+README-backend-phase-1.md
+README-backend-phase-2.md
+README-backend-phase-3.md
+README-backend-phase-4.md
+README-backend-phase-5.md
+README-backend.md
+README-deploy.md
