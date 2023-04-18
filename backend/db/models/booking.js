@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
           { foreignKey: 'spotId'}
       );
     }
-  }
+  } //test
   Booking.init({
     id: {
       type: DataTypes.INTEGER,
