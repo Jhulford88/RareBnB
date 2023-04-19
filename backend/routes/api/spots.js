@@ -1,7 +1,44 @@
 const express = require('express');
 const { Spot, Review, SpotImage, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+
+
+const validateNewSpot = [
+    check('address')
+      .exists({ checkFalsy: true })
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsy: true })
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsy: true })
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsy: true })
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .isDecimal()
+      .withMessage('Latitude is not valid'),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .isDecimal()
+      .withMessage('Longitude is not valid'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsy: true })
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .withMessage('Price per day is required'),
+    handleValidationErrors
+  ];
 
 //get details of a spot from an ID
 router.get('/:spotId', async (req, res) =>{
@@ -131,8 +168,24 @@ router.get('', async (req, res) => {
         delete spot.SpotImages
     })
 
-
+    console.log('req.user.....',req.user)
     res.json(spotList)
+});
+
+
+//Add an image to a spot based on the spots ID
+router.post('/:spotId/images')
+
+//Create a spot
+router.post('', requireAuth, validateNewSpot, async (req, res) => {
+    const newSpot = await Spot.build(req.body)
+
+    // newSpot.id =
+    newSpot.ownerId = req.user.id
+
+    await newSpot.save()
+
+    res.json(newSpot)
 });
 
 
@@ -145,38 +198,3 @@ router.get('', async (req, res) => {
 
 
 module.exports = router;
-
-
-
-// const normalizeSpots = (spots) => {
-//     let spotsList = [];
-
-//     spots.forEach(spot => {
-//         spotsList.push(spot.toJSON())
-//     })
-
-//     spotsList.forEach(spot => {
-//         let sum = 0;
-//         spot.Reviews.forEach(review => {
-//             sum += review.stars
-//         })
-//         spot.avgRating = sum / spot.Reviews.length
-
-//         delete spot.Reviews
-//     })
-
-//     spotsList.forEach(spot => {
-//         spot.SpotImages.forEach(image => {
-//             if (image.preview === true) {
-//                 spot.previewImage = image.url
-//             }
-//         })
-//         if (!spot.previewImage) {
-//             spot.previewImage = 'No preview image found'
-//         }
-
-//         delete spot.SpotImages
-//     })
-
-//     return spotsList
-// }
