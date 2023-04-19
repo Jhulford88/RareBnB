@@ -252,6 +252,7 @@ router.put('/:spotId', requireAuth, validateNewSpot, async (req, res) => {
 
 });
 
+//Delete a spot
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
 
