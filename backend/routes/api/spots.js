@@ -203,7 +203,9 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     delete newSpotImageNormalized.createdAt;
 
     res.json(newSpotImageNormalized)
-})
+});
+
+
 
 //Create a spot
 router.post('', requireAuth, validateNewSpot, async (req, res) => {
@@ -215,6 +217,39 @@ router.post('', requireAuth, validateNewSpot, async (req, res) => {
     await newSpot.save()
 
     res.json(newSpot)
+});
+
+
+//Edit a spot
+router.put('/:spotId', requireAuth, validateNewSpot, async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const {user} = req;
+
+    let normalizedUser = user.toJSON();
+
+    if (!spot) {
+        res.statusCode = 404;
+        res.json({message: "Spot couldn't be found"})
+    };
+    if (spot.ownerId !== normalizedUser.id) {
+        res.statusCode = 403;
+        res.json({message: "Forbidden"})
+    };
+
+    spot.address = address,
+    spot.city = city,
+    spot.state = state,
+    spot.country = country,
+    spot.lat = lat,
+    spot.lng = lng,
+    spot.name = name,
+    spot.description = description,
+    spot.price = price
+
+    res.json(spot);
+
 });
 
 
