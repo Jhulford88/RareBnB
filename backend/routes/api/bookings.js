@@ -32,27 +32,16 @@ router.get('/current', requireAuth, async (req, res) => {
         })
 
         delete booking.Spot.SpotImages
-        // delete review.Spot.SpotImages
         delete booking.Spot.createdAt;
         delete booking.Spot.updatedAt;
         delete booking.Spot.description;
 
-        // const reviewImages = review.ReviewImages
-
-        // reviewImages.forEach(image => {
-
-        //     delete image.reviewId
-        //     delete image.createdAt
-        //     delete image.updatedAt
-
-        // });
     });
-
-
-
 
     res.json({"Bookings":normalizedBookings})
 })
+
+
 
 
 

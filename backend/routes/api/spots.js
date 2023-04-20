@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -49,7 +49,50 @@ const validateNewSpot = [
       .exists({ checkFalsy: true })
       .withMessage('Price per day is required'),
     handleValidationErrors
-  ];
+];
+
+//Get all bookings for a spot based on the spots ID
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        include: {
+             model: User
+         }
+    });
+
+    if (!spot) {
+        res.status(404).json({"message": "Spot couldn't be found"})
+    };
+
+    const {user} = req;
+    let normalizedUser = user.toJSON();
+
+    let normalizedBookings = [];
+    bookings.forEach(booking => {
+        normalizedBookings.push(booking.toJSON());
+    });
+
+    if (spot.ownerId !== normalizedUser.id) {
+        const notOwnerObj = {};
+        normalizedBookings.forEach(booking => {
+            notOwnerObj.spotId = booking.spotId;
+            notOwnerObj.startDate = booking.startDate;
+            notOwnerObj.endDate = booking.endDate;
+        });
+        res.json({"Bookings":notOwnerObj})
+    } else {
+        normalizedBookings.forEach(booking => {
+            delete booking.User.username;
+        });
+        res.json({"Bookings":normalizedBookings})
+    };
+
+});
+
+
 
 //Get all Reviews by a Spot's ID
 router.get('/:spotId/reviews', async (req, res) => {
