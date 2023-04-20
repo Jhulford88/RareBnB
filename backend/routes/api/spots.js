@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, Review, SpotImage, User } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -39,6 +39,52 @@ const validateNewSpot = [
       .withMessage('Price per day is required'),
     handleValidationErrors
   ];
+
+//Get all Reviews by a Spot's ID
+router.get('/:spotId/reviews', async (req, res) => {
+
+    const reviews = await Review.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        include: [
+            {
+                model: ReviewImage
+            },
+            {
+                model: User
+            }
+        ]
+    });
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if(!spot) {
+        res.statusCode = 404;
+        res.json({"message": "Spot couldn't be found"})
+    }
+
+    let reviewList = [];
+
+    reviews.forEach(review => {
+        reviewList.push(review.toJSON())
+    });
+
+    reviewList.forEach(review => {
+        review.ReviewImages.forEach(image => {
+            delete image.reviewId;
+            delete image.createdAt;
+            delete image.updatedAt;
+        });
+        delete review.User.username;
+    });
+
+
+    res.json({"Reviews": reviewList})
+});
+
+
+
 
 //get details of a spot from an ID
 router.get('/:spotId', async (req, res) =>{
