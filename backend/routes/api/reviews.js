@@ -5,6 +5,18 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+//New review validator
+const validateNewReview = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage('Review text is required'),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .isInt({ min: 1, max: 5 })
+      .withMessage('Stars must be an integer from 1 to 5'),
+      handleValidationErrors
+];
+
 
 //get all reviews of the current user
 router.get('/current', requireAuth, async (req, res) => {
@@ -77,7 +89,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     newImg.reviewId = req.params.reviewId;
     await newImg.save();
 
-    // console.log(existingReview)
+
     const { user } = req;
     const normalizedUser = user.toJSON();
     if (existingReview.userId !== normalizedUser.id) {
@@ -101,6 +113,24 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     res.json(resObj);
 
 });
+
+
+//Edit a review
+router.put('/:reviewId', requireAuth, validateNewReview, async (req, res) => {
+    const {review, stars} = req.body;
+    const newReview = await Review.findByPk(req.params.reviewId);
+
+    if(!newReview) {
+        res.status(404).json({"message": "Review couldn't be found"})
+    }
+
+    newReview.review = review;
+    newReview.stars = stars;
+
+    res.json(newReview);
+});
+
+
 
 
 //Delete a review
