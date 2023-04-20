@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
 const validateNewReview = [
     check('review')
       .exists({ checkFalsy: true })
@@ -271,6 +272,86 @@ router.get('', async (req, res) => {
     console.log('req.user.....',req.user)
     res.json(spotList)
 });
+
+
+//Create a Booking from Spot based on the Spot's ID
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    const {user} = req;
+    const spot = await Spot.findByPk(req.params.spotId);
+    //check if spot exists
+    if (!spot) {
+        res.json({"message": "Spot couldn't be found"})
+    }
+
+    //confirm spot does not belong to user
+    let normalizedUser = user.toJSON();
+    if (spot.ownerId === normalizedUser.id) {
+        res.statusCode = 403;
+        res.json({message: "Forbidden"})
+    };
+
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: req.params.spotId
+        }
+    });
+
+    let normalizedBookings = [];
+    bookings.forEach(booking => {
+        normalizedBookings.push(booking.toJSON());
+    });
+
+    const {startDate, endDate} = req.body;
+
+    let reqStartDateObj = new Date(startDate);
+    let reqEndDateObj = new Date(endDate);
+    let reqStartEpoch = reqStartDateObj.getTime();
+    let reqEndEpoch = reqEndDateObj.getTime();
+
+    if(reqStartEpoch >= reqEndEpoch) {
+        res.json({"message": "Bad Request",
+        "errors": {
+          "endDate": "endDate cannot be on or before startDate"
+        }});
+    };
+
+    for (let booking of normalizedBookings) {
+        let startDateString = booking.startDate.toDateString();
+        let endDateString = booking.endDate.toDateString();
+        let startDateObj = new Date(startDateString);
+        let endDateObj = new Date(endDateString);
+        let startEpoch = startDateObj.getTime();
+        let endEpoch = endDateObj.getTime();
+
+        if (reqStartEpoch >= startEpoch && reqStartEpoch <= endEpoch) {
+            return res.status(403).json({"message": "Sorry, this spot is already booked for the specified dates",
+            "errors": {
+              "startDate": "Start date conflicts with an existing booking"
+              }
+            })
+        }
+        if (reqEndEpoch >= startEpoch && reqEndEpoch <= endEpoch) {
+            return res.status(403).json({"message": "Sorry, this spot is already booked for the specified dates",
+            "errors": {
+                "endDate": "End date conflicts with an existing booking"
+              }
+            })
+        }
+    };
+
+    const newBooking = await Booking.build(req.body);
+
+    newBooking.spotId = req.params.spotId;
+    newBooking.userId = user.id;
+
+
+    await newBooking.save()
+
+
+    res.json(newBooking);
+
+});
+
 
 
 //Add an image to a spot based on the spots ID
