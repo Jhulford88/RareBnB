@@ -4,6 +4,7 @@ const { requireAuth } = require('../../utils/auth.js');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+const {Op} = require("sequelize");
 
 
 const validateNewReview = [
@@ -271,21 +272,21 @@ router.get('', async (req, res) => {
     //verify Lat constraints
     if(minLat && !maxLat) {
         if (minLat >= -90 && minLat <= 90) {
-            where.lat = {[Op.gte]: minLat}
+           query.where.lat = {[Op.gte]: minLat}
         } else {
             errors.minLat = "Minimum latitude is invalid"
         }
     };
     if (maxLat && !minLat) {
         if (maxLat >= -90 && maxLat <= 90) {
-            where.lat = {[Op.lte]: maxLat}
+            query.where.lat = {[Op.lte]: maxLat}
         } else {
             errors.maxLat = "Maximum latitude is invalid"
         }
     };
     if(maxLat && minLat){
         if((minLat >= -90 && minLat <= 90) && (maxLat >= -90 && maxLat <= 90)) {
-            where.lat ={[Op.between]: [minLat, maxLat]}
+            query.where.lat ={[Op.between]: [minLat, maxLat]}
         } else {
             errors.minLat = "Minimum latitude is invalid";
             errors.maxLat = "Maximum latitude is invalid";
@@ -295,21 +296,21 @@ router.get('', async (req, res) => {
     //verify Lng constraints
     if (minLng && !maxLng) {
         if (minLng >= -180 && minLng <= 180) {
-            where.lng = {[Op.gte]: minLng}
+            query.where.lng = {[Op.gte]: minLng}
         } else {
             errors.minLng = "Maximum longitude is invalid"
         }
     };
     if (maxLng && !minLng) {
         if(maxLng >= -180 && maxLng <= 180) {
-            where.lng = {[Op.lte]: maxLng}
+            query.where.lng = {[Op.lte]: maxLng}
         } else {
             errors.maxLng = "Minimum longitude is invalid"
         }
     };
     if(maxLng && minLng){
         if ((minLng >= -180 && minLng <= 180) && (maxLng >= -180 && maxLng <= 180)) {
-            where.lng ={[Op.between]: [minLng, maxLng]}
+            query.where.lng ={[Op.between]: [minLng, maxLng]}
         } else {
             errors.minLng = "Maximum longitude is invalid"
             errors.maxLng = "Minimum longitude is invalid"
@@ -319,21 +320,21 @@ router.get('', async (req, res) => {
     //verify prices constraints
     if (minPrice && !maxPrice) {
         if (minPrice >= 0) {
-            where.price = {[Op.gte]: minPrice}
+            query.where.price = {[Op.gte]: minPrice}
         } else {
             errors.minPrice = "Minimum price must be greater than or equal to 0"
         }
     };
     if (maxPrice && !minPrice) {
         if (maxPrice >= 0) {
-            where.price = {[Op.lte]: maxPrice}
+            query.where.price = {[Op.lte]: maxPrice}
         } else {
             errors.maxPrice = "Maximum price must be greater than or equal to 0"
         }
     };
     if(maxPrice && minPrice){
         if (minPrice >= 0 && maxPrice >= 0) {
-            where.price ={[Op.between]: [minPrice, maxPrice]}
+            query.where.price ={[Op.between]: [minPrice, maxPrice]}
         } else {
             errors.minPrice = "Minimum price must be greater than or equal to 0"
             errors.maxPrice = "Maximum price must be greater than or equal to 0"
