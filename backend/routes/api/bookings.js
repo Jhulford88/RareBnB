@@ -88,14 +88,14 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         });
     };
 
-    let bookingsList = [];
+    let normalizedBookings = [];
 
     allBookings.forEach(booking => {
-        bookingsList.push(booking.toJSON())
+        normalizedBookings.push(booking.toJSON())
 
     });
 
-    for (let booking of bookingsList) {
+    for (let booking of normalizedBookings) {
         let start = booking.startDate.toDateString();
         let end = booking.endDate.toDateString();
         let startD = new Date(start);

@@ -94,7 +94,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 });
 
 
-
 //Get all Reviews by a Spot's ID
 router.get('/:spotId/reviews', async (req, res) => {
 
@@ -137,8 +136,6 @@ router.get('/:spotId/reviews', async (req, res) => {
 
     res.json({"Reviews": reviewList})
 });
-
-
 
 
 //get details of a spot from an ID
@@ -228,9 +225,10 @@ router.get('/current', requireAuth, async (req, res) => {
 
     res.json(spotList)
 
-})
+});
 
-//get all spots and include preview images and average ratings
+
+//get all spots
 router.get('', async (req, res) => {
 
     const spots = await Spot.findAll({
@@ -353,7 +351,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 });
 
 
-
 //Add an image to a spot based on the spots ID
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
@@ -386,6 +383,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     res.json(newSpotImageNormalized)
 });
 
+
 //Create a Review for a Spot based on the Spot's ID
 router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res) => {
 
@@ -411,7 +409,7 @@ router.post('/:spotId/reviews', requireAuth, validateNewReview, async (req, res)
     await review.save();
 
     res.status(201).json(review);
-})
+});
 
 
 //Create a spot
@@ -458,6 +456,7 @@ router.put('/:spotId', requireAuth, validateNewSpot, async (req, res) => {
 
 });
 
+
 //Delete a spot
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
@@ -477,14 +476,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
     spot.destroy();
     res.json({message: "Successfully deleted"});
-})
-
-
-
-
-
-
-
+});
 
 
 

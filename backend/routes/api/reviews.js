@@ -131,8 +131,6 @@ router.put('/:reviewId', requireAuth, validateNewReview, async (req, res) => {
 });
 
 
-
-
 //Delete a review
 router.delete('/:reviewId', requireAuth, async (req, res) => {
     const { user } = req;
