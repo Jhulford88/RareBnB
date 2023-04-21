@@ -309,7 +309,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     let reqEndEpoch = reqEndDateObj.getTime();
 
     if(reqStartEpoch >= reqEndEpoch) {
-        res.json({"message": "Bad Request",
+        return res.status(400).json({"message": "Bad Request",
         "errors": {
           "endDate": "endDate cannot be on or before startDate"
         }});
