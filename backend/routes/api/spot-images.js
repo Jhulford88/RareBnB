@@ -8,17 +8,32 @@ const router = express.Router();
 
 
 
-
+//Delete spot image
 router.delete('/:imageId', requireAuth, async (req, res) => {
+
+    //find spot image by imageId
+    const spotImage = await SpotImage.findByPk(req.params.imageId, {
+        include: {
+            model: Spot
+        }
+    });
+
+    //check that spot image exists
+    if (!spotImage) {
+        return res.status(404).json({ "message": "Spot Image couldn't be found"});
+    };
+
+    //check authorization of user
     const {user} = req;
-
-    const booking = await Booking.findByPk(req.params.bookingId);
-
     const normalizedUser = user.toJSON();
-    if (booking.userId !== normalizedUser.id) {
+    if (spotImage.Spot.ownerId !== normalizedUser.id) {
         return res.status(403).json({"message": "Forbidden"});
     };
-})
+
+    //delete spot image
+    await spotImage.destroy();
+    res.json({ "message": "Successfully deleted"})
+});
 
 
 
