@@ -95,6 +95,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 });
 
 
+
 //Get all Reviews by a Spot's ID
 router.get('/:spotId/reviews', async (req, res) => {
 
@@ -136,48 +137,6 @@ router.get('/:spotId/reviews', async (req, res) => {
 
 
     res.json({"Reviews": reviewList})
-});
-
-
-//get details of a spot from an ID
-router.get('/:spotId', async (req, res) =>{
-
-    const spot = await Spot.findByPk(req.params.spotId, {
-        include: [
-            {model: Review},
-            {model: SpotImage},
-            {model: User, as: "Owner"}
-        ]
-    });
-
-    if (!spot) {
-        res.statusCode = 404;
-        res.json({message: "Spot couldn't be found"})
-    }
-
-    let normalizedSpot = spot.toJSON();
-
-    let sum = 0;
-        normalizedSpot.Reviews.forEach(review => {
-            sum += review.stars
-        })
-        normalizedSpot.avgRating = sum / normalizedSpot.Reviews.length
-        normalizedSpot.numReviews = normalizedSpot.Reviews.length
-        delete normalizedSpot.Reviews
-
-
-        normalizedSpot.SpotImages.forEach(image => {
-            delete image.spotId
-            delete image.createdAt
-            delete image.updatedAt
-        });
-
-        delete normalizedSpot.Owner.username
-
-
-
-    res.json(normalizedSpot)
-
 });
 
 
@@ -225,6 +184,48 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
     res.json(spotList)
+
+});
+
+
+//get details of a spot from an ID
+router.get('/:spotId', async (req, res) =>{
+
+    const spot = await Spot.findByPk(req.params.spotId, {
+        include: [
+            {model: Review},
+            {model: SpotImage},
+            {model: User, as: "Owner"}
+        ]
+    });
+
+    if (!spot) {
+        res.statusCode = 404;
+        res.json({message: "Spot couldn't be found"})
+    }
+
+    let normalizedSpot = spot.toJSON();
+
+    let sum = 0;
+        normalizedSpot.Reviews.forEach(review => {
+            sum += review.stars
+        })
+        normalizedSpot.avgRating = sum / normalizedSpot.Reviews.length
+        normalizedSpot.numReviews = normalizedSpot.Reviews.length
+        delete normalizedSpot.Reviews
+
+
+        normalizedSpot.SpotImages.forEach(image => {
+            delete image.spotId
+            delete image.createdAt
+            delete image.updatedAt
+        });
+
+        delete normalizedSpot.Owner.username
+
+
+
+    res.json(normalizedSpot)
 
 });
 
