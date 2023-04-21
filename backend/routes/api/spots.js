@@ -78,13 +78,15 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     });
 
     if (spot.ownerId !== normalizedUser.id) {
-        const notOwnerObj = {};
+        let notOwnerArr = []
         normalizedBookings.forEach(booking => {
+            const notOwnerObj = {};
             notOwnerObj.spotId = booking.spotId;
             notOwnerObj.startDate = booking.startDate;
             notOwnerObj.endDate = booking.endDate;
+            notOwnerArr.push(notOwnerObj)
         });
-        res.json({"Bookings":notOwnerObj})
+        res.json({"Bookings":notOwnerArr})
     } else {
         normalizedBookings.forEach(booking => {
             delete booking.User.username;

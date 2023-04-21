@@ -127,6 +127,8 @@ router.put('/:reviewId', requireAuth, validateNewReview, async (req, res) => {
     newReview.review = review;
     newReview.stars = stars;
 
+    await newReview.save();
+
     res.json(newReview);
 });
 
@@ -138,13 +140,11 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     const review = await Review.findByPk(req.params.reviewId)
 
     if(!review) {
-        res.statusCode(404);
-        res.json({"message": "Review couldn't be found"});
+        res.status(404).json({"message": "Review couldn't be found"});
     }
 
     if (review.userId !== normalizedUser.id) {
-        res.statusCode(403);
-        res.json({"message": "Forbidden"});
+        res.status(403).json({"message": "Forbidden"});
     }
 
     await review.destroy()
