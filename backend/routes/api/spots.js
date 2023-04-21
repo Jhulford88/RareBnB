@@ -230,13 +230,123 @@ router.get('/current', requireAuth, async (req, res) => {
 
 //get all spots
 router.get('', async (req, res) => {
+    // Parse the page and size from the request's query parameters
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-    const spots = await Spot.findAll({
+
+    let query = {
+        where: {},
         include: [
-        { model: Review },
-        { model: SpotImage }
-    ]
-    });
+            { model: Review },
+            { model: SpotImage }
+        ]
+    }
+    //Pagination
+    // Set default values for the page and size if not provided
+    if (!page) page = 1;
+    if (!size) size = 20;
+    //convert provided values to number types
+    page = parseInt(page);
+    size = parseInt(size);
+    //assign values to query object
+    if (page >= 1 && size >= 1) {
+        query.limit = size;
+        query.offset = size * (page - 1);
+    }
+
+    let errors = {};
+    //Search Filters
+    //verify page and size constraints
+    if(size >= 1 && size <= 20) {
+        query.limit = size
+    } else {
+        errors.page = "Page must be greater than or equal to 1 and less than or equal to 20"
+    }
+    if(page >= 1 && page <= 10) {
+        query.offset = size * (page -1)
+    } else {
+        errors.size = "Size must be greater than or equal to 1 and less than or equal to 10"
+    }
+
+    //verify Lat constraints
+    if(minLat && !maxLat) {
+        if (minLat >= -90 && minLat <= 90) {
+            where.lat = {[Op.gte]: minLat}
+        } else {
+            errors.minLat = "Minimum latitude is invalid"
+        }
+    };
+    if (maxLat && !minLat) {
+        if (maxLat >= -90 && maxLat <= 90) {
+            where.lat = {[Op.lte]: maxLat}
+        } else {
+            errors.maxLat = "Maximum latitude is invalid"
+        }
+    };
+    if(maxLat && minLat){
+        if((minLat >= -90 && minLat <= 90) && (maxLat >= -90 && maxLat <= 90)) {
+            where.lat ={[Op.between]: [minLat, maxLat]}
+        } else {
+            errors.minLat = "Minimum latitude is invalid";
+            errors.maxLat = "Maximum latitude is invalid";
+        }
+    };
+
+    //verify Lng constraints
+    if (minLng && !maxLng) {
+        if (minLng >= -180 && minLng <= 180) {
+            where.lng = {[Op.gte]: minLng}
+        } else {
+            errors.minLng = "Maximum longitude is invalid"
+        }
+    };
+    if (maxLng && !minLng) {
+        if(maxLng >= -180 && maxLng <= 180) {
+            where.lng = {[Op.lte]: maxLng}
+        } else {
+            errors.maxLng = "Minimum longitude is invalid"
+        }
+    };
+    if(maxLng && minLng){
+        if ((minLng >= -180 && minLng <= 180) && (maxLng >= -180 && maxLng <= 180)) {
+            where.lng ={[Op.between]: [minLng, maxLng]}
+        } else {
+            errors.minLng = "Maximum longitude is invalid"
+            errors.maxLng = "Minimum longitude is invalid"
+        }
+    };
+
+    //verify prices constraints
+    if (minPrice && !maxPrice) {
+        if (minPrice >= 0) {
+            where.price = {[Op.gte]: minPrice}
+        } else {
+            errors.minPrice = "Minimum price must be greater than or equal to 0"
+        }
+    };
+    if (maxPrice && !minPrice) {
+        if (maxPrice >= 0) {
+            where.price = {[Op.lte]: maxPrice}
+        } else {
+            errors.maxPrice = "Maximum price must be greater than or equal to 0"
+        }
+    };
+    if(maxPrice && minPrice){
+        if (minPrice >= 0 && maxPrice >= 0) {
+            where.price ={[Op.between]: [minPrice, maxPrice]}
+        } else {
+            errors.minPrice = "Minimum price must be greater than or equal to 0"
+            errors.maxPrice = "Maximum price must be greater than or equal to 0"
+        }
+    };
+
+
+    if (Object.keys(errors).length) {
+        return res.status(400).json({"message": "Bad Request", "errors": errors})
+    };
+
+
+    const spots = await Spot.findAll(query);
 
     let spotList = []
 
@@ -254,7 +364,6 @@ router.get('', async (req, res) => {
         delete spot.Reviews
     })
 
-
     spotList.forEach(spot => {
         spot.SpotImages.forEach(image => {
             if (image.preview === true) {
@@ -265,10 +374,11 @@ router.get('', async (req, res) => {
             spot.previewImage = 'No image found'
         }
         delete spot.SpotImages
-    })
+    });
 
-    console.log('req.user.....',req.user)
-    res.json(spotList)
+
+    res.json({"Spots":spotList, page, size});
+
 });
 
 

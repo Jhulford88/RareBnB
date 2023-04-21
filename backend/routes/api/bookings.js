@@ -140,7 +140,9 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
     const {user} = req;
 
-    const booking = await Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findByPk(req.params.bookingId, {
+        include: {model:Spot}
+    });
 
 
     if (!booking) {
@@ -148,7 +150,7 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     };
 
     const normalizedUser = user.toJSON();
-    if (booking.userId !== normalizedUser.id) {
+    if (booking.userId !== normalizedUser.id && normalizedUser.id !== booking.Spot.ownerId ) {
         return res.status(403).json({"message": "Forbidden"});
     };
 
