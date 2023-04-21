@@ -9,7 +9,16 @@ const router = express.Router();
 
 
 
+router.delete('/:imageId', requireAuth, async (req, res) => {
+    const {user} = req;
 
+    const booking = await Booking.findByPk(req.params.bookingId);
+
+    const normalizedUser = user.toJSON();
+    if (booking.userId !== normalizedUser.id) {
+        return res.status(403).json({"message": "Forbidden"});
+    };
+})
 
 
 

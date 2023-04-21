@@ -142,13 +142,14 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
     const booking = await Booking.findByPk(req.params.bookingId);
 
-    const normalizedUser = user.toJSON();
-    if (booking.userId !== normalizedUser.id) {
-        res.status(403).json({"message": "Forbidden"});
-    };
 
     if (!booking) {
-        res.status(404).json({ "message": "Booking couldn't be found"});
+        return res.status(404).json({ "message": "Booking couldn't be found"});
+    };
+
+    const normalizedUser = user.toJSON();
+    if (booking.userId !== normalizedUser.id) {
+        return res.status(403).json({"message": "Forbidden"});
     };
 
     let start = booking.startDate.toDateString();
@@ -157,7 +158,7 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     let currentDate = Date.now();
 
     if(startBookedTime <= currentDate) {
-        res.status(403).json({"message": "Bookings that have been started can't be deleted"});
+        return res.status(403).json({"message": "Bookings that have been started can't be deleted"});
     };
 
     await booking.destroy();
