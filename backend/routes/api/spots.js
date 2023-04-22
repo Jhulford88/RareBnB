@@ -185,7 +185,7 @@ router.get('/current', requireAuth, async (req, res) => {
     })
 
 
-    res.json(spotList)
+    res.json({"Spots":spotList});
 
 });
 
