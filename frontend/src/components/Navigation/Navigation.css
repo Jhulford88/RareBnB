@@ -1,3 +1,36 @@
+.header-dropdown {
+    align-items: center;
+    border: 1px;
+    border-radius: 25px;
+    border-style: solid;
+    display: flex;
+    height: 15px;
+    justify-content: center;
+    padding: 10px;
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    width: 50px;
+
+}
+
 .hidden {
     display: none;
+}
+
+.logo {
+    width: 120px;
+    height: 42px;
+
+}
+
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    border-bottom: .5px solid gray;
+    height: 70px;
 }
