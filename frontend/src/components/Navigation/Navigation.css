@@ -11,7 +11,16 @@
     right: 50px;
     top: 20px;
     width: 50px;
+}
 
+.header-ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    border-bottom: .5px solid gray;
+    height: 70px;
 }
 
 .hidden {
@@ -22,15 +31,4 @@
     width: 120px;
     height: 42px;
 
-}
-
-
-ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
-    border-bottom: .5px solid gray;
-    height: 70px;
 }

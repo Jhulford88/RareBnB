@@ -9,7 +9,7 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
+    <ul className='header-ul'>
       <li>
         <NavLink exact to="/" className="home-button" ><a href='' className='logo'><img className='logo' src={logo}/></a></NavLink>
       </li>
