@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LandingPageCard from './LandingPageCard';
 import { fetchSpots } from '../../store/spotsReducer';
+import "./landingPage.css"
 
 function LandingPage() {
 
@@ -14,13 +15,14 @@ function LandingPage() {
         dispatch(fetchSpots())
      }, [dispatch]);
 
-     console.log('spots............',spots)
+    //  console.log('spots............',spots)
 
     return (
         <>
             <ul>
-            {/* use .map to create li's for each spot */}
-            <li>TEST {spots[1].address} TEST</li>
+            {spots.map((spot) => (
+                 <LandingPageCard key={spot.id} spot={spot} />
+        ))}
             </ul>
         </>
     );
