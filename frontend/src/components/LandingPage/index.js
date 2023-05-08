@@ -14,10 +14,13 @@ function LandingPage() {
         dispatch(fetchSpots())
      }, [dispatch]);
 
+     console.log('spots............',spots)
+
     return (
         <>
             <ul>
             {/* use .map to create li's for each spot */}
+            <li>TEST {spots[1].address} TEST</li>
             </ul>
         </>
     );
