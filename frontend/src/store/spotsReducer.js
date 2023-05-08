@@ -21,12 +21,17 @@ export const fetchSpots = () => async dispatch => {
 const spotsReducer = (state={}, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
+            // console.log('action.spots........................',action.spots)
             const spotsState = {};
-            action.spots.forEach(spot => {
+            // console.log('spotsState........BEFORE.................',spotsState)
+            action.spots.Spots.forEach(spot => {
                 spotsState[spot.id] = spot;
             });
+            // console.log('spotsState.........................',spotsState)
             return spotsState
         default:
             return state;
     }
-}
+};
+
+export default spotsReducer;
