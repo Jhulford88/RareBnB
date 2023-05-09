@@ -16,18 +16,16 @@ export const fetchSpots = () => async dispatch => {
     const spots = await response.json();
     dispatch(loadSpots(spots));
 }
-
+//initial state
+const initState = {allSpots: {}, singleSpot: {}}
 // spotsReducer
-const spotsReducer = (state={}, action) => {
+const spotsReducer = (state = initState, action) => {
+    const spotsState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
     switch (action.type) {
         case LOAD_SPOTS:
-            // console.log('action.spots........................',action.spots)
-            const spotsState = {};
-            // console.log('spotsState........BEFORE.................',spotsState)
             action.spots.Spots.forEach(spot => {
-                spotsState[spot.id] = spot;
+                spotsState.allSpots[spot.id] = spot;
             });
-            // console.log('spotsState.........................',spotsState)
             return spotsState
         default:
             return state;

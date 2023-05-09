@@ -4,6 +4,7 @@ import { Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage/index";
+import CreateSpotPage from "./components/CreateSpotPage/index"
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       {isLoaded &&
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/spots/new" component={CreateSpotPage} />
       </Switch>}
     </>
   );
