@@ -7,7 +7,7 @@ function LandingPageCard({spot}) {
     // console.log(spot.spot.previewImage)
     return (
         <li className="spot-card">
-            <Link to="">
+            <Link to={`/spots/${spot.id}`}>
             <div className="spot-card-container">
                 {/* spot picture */}
                 <div className="spot-card-image-container">
