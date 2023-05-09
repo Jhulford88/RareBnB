@@ -1,3 +1,27 @@
 .spot-card-container {
     border: 2px solid red;
 }
+
+.spot-card {
+    width: 20%;
+    padding: 30px;
+
+}
+
+.spot-card-gallery-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.spot-card-gallery-list {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* margin: 30px; */
+}
+
+.spot-card-img {
+    width: 100%;
+}

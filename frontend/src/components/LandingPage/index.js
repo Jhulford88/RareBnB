@@ -7,7 +7,7 @@ import "./landingPage.css"
 function LandingPage() {
 
     const dispatch = useDispatch();
-    const spotsObj = useSelector(state => state.spots);
+    const spotsObj = useSelector(state => state.spots.allSpots);
     const spots = Object.values(spotsObj);
 
      // use useEffect to request the spots info when the page is loaded
@@ -18,13 +18,13 @@ function LandingPage() {
     //  console.log('spots............',spots)
 
     return (
-        <>
-            <ul>
-            {spots.map((spot) => (
-                 <LandingPageCard key={spot.id} spot={spot} />
-        ))}
+        <div className='spot-card-gallery-container'>
+            <ul className='spot-card-gallery-list'>
+                {spots.map((spot) => (
+                    <LandingPageCard key={spot.id} spot={spot} />
+                ))}
             </ul>
-        </>
+        </div>
     );
 };
 
