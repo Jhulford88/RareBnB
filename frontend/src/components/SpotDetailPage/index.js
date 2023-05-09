@@ -11,7 +11,7 @@ function SpotDetailPage(){
     const spot = useSelector(state => state.spots.singleSpot);
     const singleSpot = spot[id]
 
-    console.log('single Spot.........!!!........',singleSpot)
+    // console.log('single Spot.........!!!........',singleSpot)
 
     useEffect(() => {
         dispatch(fetchSingleSpot(id))

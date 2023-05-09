@@ -6,6 +6,7 @@ import { csrfFetch } from "./csrf";
 export const LOAD_SPOTS = "spots/LOAD_SPOTS";
 export const LOAD_SINGLE_SPOT = "spots/LOAD_SINGLE_SPOT";
 export const CREATE_SPOT = "spots/CREATE_SPOT";
+export const POST_SPOT_IMAGE = "spots/POST_SPOT_IMAGE";
 
 //action creators
 //Load all spots
@@ -18,6 +19,11 @@ export const loadSpots = (spots) => ({
 export const loadSingleSpot = (spot) => ({
     type: LOAD_SINGLE_SPOT,
     spot
+});
+
+export const postSpotImage = (data) => ({
+    type: POST_SPOT_IMAGE,
+    data
 });
 
 //thunks
@@ -62,6 +68,24 @@ export const createSpot = (form) => async dispatch => {
     // }
   };
 
+  export const createSpotImage = (spotId, spotImage) => async dispatch => {
+    const response = await csrfFetch(`/api/${spotId}/images`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(spotImage)
+    })
+    console.log('response in thunk...........', response)
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(postSpotImage(data))
+        console.log('data in thunk............', data)
+        return data.id
+    } else {
+        const errors = await response.json()
+        return errors
+    }
+  }
+
 
 
 //initial state
@@ -81,6 +105,8 @@ const spotsReducer = (state = initState, action) => {
         case LOAD_SINGLE_SPOT:
             spotsState.singleSpot[action.spot.id] = action.spot;
             return spotsState
+        case POST_SPOT_IMAGE:
+            return {...state, singleSpot:{SpotImages: [...state.singleSpot.SpotImages, action.spotImage]}}
         default:
             return state;
     }
