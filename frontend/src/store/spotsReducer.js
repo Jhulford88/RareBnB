@@ -8,7 +8,11 @@ export const LOAD_SINGLE_SPOT = "spots/LOAD_SINGLE_SPOT";
 export const CREATE_SPOT = "spots/CREATE_SPOT";
 export const POST_SPOT_IMAGE = "spots/POST_SPOT_IMAGE";
 
+
+
+
 //action creators
+
 //Load all spots
 export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
@@ -26,6 +30,10 @@ export const postSpotImage = (data) => ({
     data
 });
 
+
+
+
+
 //thunks
 export const fetchSpots = () => async dispatch => {
     const response = await fetch("/api/spots");
@@ -39,8 +47,8 @@ export const fetchSingleSpot = (spotId) => async dispatch => {
     dispatch(loadSingleSpot(spot));
 };
 
-export const createSpot = (form) => async dispatch => {
-    // console.log('form in thunk................',form)
+export const createSpot = (form, imageArr, sessionUser) => async dispatch => {
+
     let response;
     try {
         response = await csrfFetch('/api/spots', {
@@ -48,48 +56,40 @@ export const createSpot = (form) => async dispatch => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(form)
       });
-        const data = await response.json()
-        // console.log('data in thunk............',data)
-        dispatch(fetchSingleSpot(data))
-        return data;
+        const newSpot = await response.json()
+
+
+        const newlyCreatedImages = [];
+        for (let image of imageArr) {
+            const response = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(image)
+            })
+            const imageFromDB = await response.json();
+            newlyCreatedImages.push(imageFromDB);
+
+        }
+        newSpot.SpotImages = newlyCreatedImages
+        newSpot.Owner = sessionUser;
+
+
+        dispatch(loadSingleSpot(newSpot))
+        return newSpot;
 
 
     } catch(e) {
         const errors = await e.json()
-        // console.log('errrors in thunk.............',errors)
         return errors
-    }
-
-    // console.log('response in thunk..........',response)
-    // if (!response.ok) {
-
-    // } else {
-
-    // }
+      }
   };
 
-  export const createSpotImage = (spotId, spotImage) => async dispatch => {
-    const response = await csrfFetch(`/api/${spotId}/images`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(spotImage)
-    })
-    console.log('response in thunk...........', response)
-    if(response.ok) {
-        const data = await response.json()
-        dispatch(postSpotImage(data))
-        console.log('data in thunk............', data)
-        return data.id
-    } else {
-        const errors = await response.json()
-        return errors
-    }
-  }
 
 
 
 //initial state
 const initState = {allSpots: {}, singleSpot: {}}
+
 
 
 
@@ -111,6 +111,12 @@ const spotsReducer = (state = initState, action) => {
             return state;
     }
 };
+
+
+
+
+
+
 
 // const spotsReducer = (state = initState, action) => {
 //     const spotsState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};

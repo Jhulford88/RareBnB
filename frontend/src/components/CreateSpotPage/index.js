@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./CreateSpotPage.css"
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spotsReducer';
 import { createSpotImage } from '../../store/spotsReducer';
 
@@ -26,7 +26,7 @@ function CreateSpotPage(){
     const [image4, setImage4] = useState('');
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
-
+    const sessionUser = useSelector(state => state.session.user);
     const form = {country, address, city, state, description, name, price};
 
     //conditionally add all photos to an array
@@ -37,24 +37,17 @@ function CreateSpotPage(){
     if(image3) imageArr.push({url: image3, preview: false});
     if(image4) imageArr.push({url: image4, preview: false});
 
-    // console.log('image array.............',imageArr)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        const newSpot = await dispatch(createSpot(form))
-        // console.log('new Spot ID in handle submit.........',newSpot.id)
+        const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
+
         if (newSpot.errors) {
             setErrors(newSpot.errors)
         }
 
-              if(imageArr.length){
-                imageArr.forEach(image => {
-                    dispatch(createSpotImage(newSpot.id, image))
-                })
-              }
-
-            history.push(`/spots/${newSpot.id}`);
+        history.push(`/spots/${newSpot.id}`);
     };
 
 
@@ -70,8 +63,7 @@ function CreateSpotPage(){
                     <input
                         type="text"
                         value={country}
-                        //add placeholders
-                        placeholder="country"
+                        placeholder="Country"
                         onChange={(e) => setCountry(e.target.value)}
                     />
                 </label>
@@ -118,7 +110,7 @@ function CreateSpotPage(){
                 <input
                     type="text"
                     value={name}
-                    placeholder="name"
+                    placeholder="Name of your spot"
                     onChange={(e) => setName(e.target.value)}
                 />
             </div>
@@ -142,7 +134,7 @@ function CreateSpotPage(){
                 <input type="text" value={image3} placeholder="Image url" onChange={(e) => setImage3(e.target.value)}/>
                 <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
             </div>
-            <button type='submit'>Create Spot</button>
+            <button className='create-spot-submit-button' type='submit'>Create Spot</button>
         </form>
     </div>
   );

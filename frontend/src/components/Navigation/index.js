@@ -15,7 +15,7 @@ function Navigation({ isLoaded }){
       </li>
       {isLoaded && (
         <li>
-          <NavLink exact to="/spots/new">{sessionUser ? "Create a new Spot" : ''}</NavLink>
+          <NavLink className="create-new-spot-link" exact to="/spots/new">{sessionUser ? "Create a new Spot" : ''}</NavLink>
           <ProfileButton user={sessionUser} />
         </li>
       )}
