@@ -9,7 +9,7 @@ function LandingPage() {
     const dispatch = useDispatch();
     const spotsObj = useSelector(state => state.spots.allSpots);
     const spots = Object.values(spotsObj);
-    console.log('spots in landing page.............',spots)
+    // console.log('spots in landing page.............',spots)
      // use useEffect to request the spots info when the page is loaded
      useEffect(() => {
         dispatch(fetchSpots())

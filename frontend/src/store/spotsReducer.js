@@ -82,8 +82,14 @@ export const createSpot = (form, imageArr, sessionUser) => async dispatch => {
         const errors = await e.json()
         return errors
       }
-  };
+};
 
+//fetch all spots owned by current user
+export const fetchSpotsOwnedByUser = () => async dispatch => {
+    const response = await csrfFetch('/api/spots/current');
+    const spots = await response.json();
+    dispatch(loadSpots(spots))
+}
 
 
 
