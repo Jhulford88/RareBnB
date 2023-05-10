@@ -53,8 +53,8 @@ function CreateSpotPage(){
         if(!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg')) newErrors['image4'] = 'Image URL must end in .png, .jpg, or .jpeg'
 
         setErrors(newErrors);
-        console.log('errors in handle submit.............',errors)
-         if(!Object.keys(errors).length) {
+
+         if(!Object.keys(newErrors).length) {
              const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
              history.push(`/spots/${newSpot.id}`);
          };

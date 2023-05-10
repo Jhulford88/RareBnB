@@ -4,16 +4,13 @@ import { fetchSpotsOwnedByUser } from '../../store/spotsReducer'
 import { Link } from "react-router-dom"
 import "./ManageSpotsPage.css"
 
-
-//The fetch below worked originally but after reloading db it is now just loading all the spots instead of just those owned by user
-//if you navigate to the manage spots page, then refresh, it updates to the correct list....
+//NEED TO REASSIGN ALL CLASSES AND POPULATE CSS FILE. CURRENTLY CSS IS COMING FROM LANDINGPAGE.CSS!!!!! WTF!!!
 
 function ManageSpotsPage() {
 
   const dispatch = useDispatch();
     const spotsObj = useSelector(state => state.spots.allSpots);
     const spots = Object.values(spotsObj);
-    // console.log('spots in manage spots page.............',spots)
 
      useEffect(() => {
         dispatch(fetchSpotsOwnedByUser())
@@ -21,7 +18,7 @@ function ManageSpotsPage() {
 
 
   return (
-    <>
+    <div>
       <h1>Manage Your Spots</h1>
       <button type='button'>Create a New Spot</button>
       <ul className='spot-card-gallery-list'>
@@ -42,7 +39,7 @@ function ManageSpotsPage() {
                 </li>
                 ))}
             </ul>
-    </>
+    </div>
   );
 }
 
