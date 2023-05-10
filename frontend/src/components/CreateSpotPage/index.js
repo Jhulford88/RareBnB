@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./CreateSpotPage.css"
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spotsReducer';
 import { createSpotImage } from '../../store/spotsReducer';
-
-//going to need seperate dispatch for submitting form and submitting photos?.... :(
-//need useState setter for EVERY field in the form?
-//compile all of those state slices into an object? send that object to thunk?
 
 
 function CreateSpotPage(){
@@ -24,7 +20,7 @@ function CreateSpotPage(){
     const [image2, setImage2] = useState('');
     const [image3, setImage3] = useState('');
     const [image4, setImage4] = useState('');
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});////////////////////////////////////////////////////////////////
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const form = {country, address, city, state, description, name, price};
@@ -38,18 +34,29 @@ function CreateSpotPage(){
     if(image4) imageArr.push({url: image4, preview: false});
 
 
+
+    const isDisabled = Object.keys(errors).length ? true : false
+
     const handleSubmit = async (e) => {
+
         e.preventDefault();
-        setErrors({});
+        // setErrors({});
         const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
 
-        if (newSpot.errors) {
-            setErrors(newSpot.errors)
-        }
+        // if (newSpot.errors) {
+        //     setErrors(newSpot.errors)
+        // }
 
         history.push(`/spots/${newSpot.id}`);
     };
 
+    useEffect(() => {
+        const newErrors = {};
+        if(country.length < 1) newErrors['country'] = 'Country is required'
+
+
+        setErrors(newErrors)
+      }, [country, city, state, address, description, name, price, previewImage])
 
   return (
     <div className='form-container'>
@@ -59,7 +66,7 @@ function CreateSpotPage(){
                 <h3>Where's your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label>
-                    Country
+                    Country {errors.country}
                     <input
                         type="text"
                         value={country}
@@ -134,7 +141,7 @@ function CreateSpotPage(){
                 <input type="text" value={image3} placeholder="Image url" onChange={(e) => setImage3(e.target.value)}/>
                 <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
             </div>
-            <button className='create-spot-submit-button' type='submit'>Create Spot</button>
+            <button className='create-spot-submit-button' type='submit' disabled={isDisabled}>Create Spot</button>
         </form>
     </div>
   );

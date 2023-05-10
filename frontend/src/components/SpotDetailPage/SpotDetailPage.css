@@ -1,0 +1,25 @@
+.main-container {
+    padding: 50px;
+}
+
+.image-grid {
+    box-sizing: border-box;
+    /* padding: 50px; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 250px;
+    gap: 10px;
+}
+
+.main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    grid-column: span 2;
+    grid-row: span 2;
+}
+.small-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
