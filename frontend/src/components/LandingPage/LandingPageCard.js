@@ -13,7 +13,7 @@ function LandingPageCard({spot}) {
                     <p>{spot.city}, {spot.state}</p>
                     <p>${spot.price} /night</p>
                     <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating : "New")}</p>
-            </div>
+                </div>
             </Link>
         </li>
     );

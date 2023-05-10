@@ -34,29 +34,33 @@ function CreateSpotPage(){
     if(image4) imageArr.push({url: image4, preview: false});
 
 
-
-    const isDisabled = Object.keys(errors).length ? true : false
-
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-        // setErrors({});
-        const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
 
-        // if (newSpot.errors) {
-        //     setErrors(newSpot.errors)
-        // }
-
-        history.push(`/spots/${newSpot.id}`);
-    };
-
-    useEffect(() => {
         const newErrors = {};
         if(country.length < 1) newErrors['country'] = 'Country is required'
+        if(address.length < 1) newErrors['address'] = 'Address is required'
+        if(city.length < 1) newErrors['city'] = 'City is required'
+        if(state.length < 1) newErrors['state'] = 'State is required'
+        if(description.length < 30) newErrors['description'] = 'Description needs a minimum of 30 characters'
+        if(name.length < 1) newErrors['name'] = 'Name is required'
+        if(price.length < 1) newErrors['price'] = 'Price is required'
+        if(previewImage.length < 1) newErrors['previewImage'] = 'Preview image is required'
+        if(!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) newErrors['previewImage'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image1.endsWith('.png') && !image1.endsWith('.jpg') && !image1.endsWith('.jpeg')) newErrors['image1'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg')) newErrors['image2'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg')) newErrors['image3'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg')) newErrors['image4'] = 'Image URL must end in .png, .jpg, or .jpeg'
 
+        setErrors(newErrors);
+        console.log('errors in handle submit.............',errors)
+         if(!Object.keys(errors).length) {
+             const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
+             history.push(`/spots/${newSpot.id}`);
+         };
 
-        setErrors(newErrors)
-      }, [country, city, state, address, description, name, price, previewImage])
+    };
+
 
   return (
     <div className='form-container'>
@@ -75,7 +79,7 @@ function CreateSpotPage(){
                     />
                 </label>
                 <label>
-                    Street Address
+                    Street Address {errors.address}
                     <input
                         type="text"
                         value={address}
@@ -84,7 +88,7 @@ function CreateSpotPage(){
                     />
                 </label>
                 <label>
-                    City
+                    City {errors.city}
                     <input
                         type="text"
                         value={city}
@@ -93,7 +97,7 @@ function CreateSpotPage(){
                     />
                 </label>
                 <label>
-                    State
+                    State {errors.state}
                     <input
                         type="text"
                         value={state}
@@ -110,6 +114,7 @@ function CreateSpotPage(){
                     placeholder="Please type at least 30 characters"
                     onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description}
             </div>
             <div className='form-section-3'>
                 <h3>Create a title for your spot</h3>
@@ -120,6 +125,7 @@ function CreateSpotPage(){
                     placeholder="Name of your spot"
                     onChange={(e) => setName(e.target.value)}
                 />
+                {errors.name}
             </div>
             <div>
                 <h3>Set a base price for your spot</h3>
@@ -131,17 +137,23 @@ function CreateSpotPage(){
                     placeholder="Price per night (USD)"
                     onChange={(e) => setPrice(e.target.value)}
                 />
+                {errors.price}
             </div>
             <div className='form-section-4'>
                 <h3>Liven up your spot with photos</h3>
                 <p>Submit a link to at least one photo to publish your spot</p>
                 <input type="text" value={previewImage} placeholder="Preview image url" onChange={(e) => setPreviewImage(e.target.value)}/>
+                {errors.previewImage}
                 <input type="text" value={image1} placeholder="Image url" onChange={(e) => setImage1(e.target.value)}/>
+                {errors.image1}
                 <input type="text" value={image2} placeholder="Image url" onChange={(e) => setImage2(e.target.value)}/>
+                {errors.image2}
                 <input type="text" value={image3} placeholder="Image url" onChange={(e) => setImage3(e.target.value)}/>
+                {errors.image3}
                 <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
+                {errors.image4}
             </div>
-            <button className='create-spot-submit-button' type='submit' disabled={isDisabled}>Create Spot</button>
+            <button className='create-spot-submit-button' type='submit' >Create Spot</button>
         </form>
     </div>
   );

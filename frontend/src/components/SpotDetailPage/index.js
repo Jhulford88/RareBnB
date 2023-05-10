@@ -21,11 +21,15 @@ function SpotDetailPage(){
 
      console.log('single spot on detail page.......',singleSpot)
 
+     const handleClick = () => {
+        window.alert("Feature coming soon!")
+     }
+
   return (
     <div className='main-container'>
-        <h1>{singleSpot.name}</h1>
-        <h3>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h3>
-        <div className='image-grid'>
+        {/* <h1>{singleSpot.name}</h1>
+        <h3>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h3> */}
+        {/* <div className='image-grid'>
           {singleSpot.SpotImages.map(image => {
             if(image.preview === true) {
               return <img className='main-image' src={image.url}/>
@@ -36,9 +40,14 @@ function SpotDetailPage(){
               return <img className='small-image' src={image.url}/>
             }
           })}
-        </div>
-        <h2>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName} </h2>
+        </div> */}
+        {/* <h2>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName} </h2>
         <p>{singleSpot.description}</p>
+        <div className='booking-box-container'>
+          <p>{singleSpot.price} night</p>
+          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
+          <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
+        </div> */}
     </div>
   );
 }

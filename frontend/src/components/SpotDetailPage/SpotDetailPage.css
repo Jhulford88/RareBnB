@@ -23,3 +23,16 @@
     height: 100%;
     object-fit: cover;
 }
+
+.booking-box-container {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 300px;
+}
+
+.booking-box-container > button {
+    background-color: #FF5A5F;
+    width: 70%;
+    height: 40px;
+    border-radius: 10px;
+}
