@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpot } from '../../store/spotsReducer';
+import { createSpot, fetchSingleSpot } from '../../store/spotsReducer';
 
 //share css with createSpotPage????
 
@@ -11,23 +11,35 @@ function UpdateSpotPage(){
     //fetch the existing spot by ID
     //set the default state for each field conditionally by deconstructing
     //the returned spot. If the field is empty, set to empty string.
+    const dispatch = useDispatch();
+    const {id} = useParams();
+    const spot = useSelector(state => state.spots.singleSpot);
+    const singleSpot = spot[id];
+    console.log('single spot in updateSpotPage...........',singleSpot)
 
+
+    useEffect(() => {
+        dispatch(fetchSingleSpot(id))
+     }, [dispatch]);
+
+     //seperating the preview image from the others
+     const originalPreviewImage = singleSpot.SpotImages.filter(image => image.preview === true);
+     const originalSmallImages = singleSpot.SpotImages.filter(image => image.preview === false);
 
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
-    const dispatch = useDispatch();
-    const [country, setCountry] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [description, setDescription] = useState('');
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [previewImage, setPreviewImage] = useState('');
-    const [image1, setImage1] = useState('');
-    const [image2, setImage2] = useState('');
-    const [image3, setImage3] = useState('');
-    const [image4, setImage4] = useState('');
+    const [country, setCountry] = useState(singleSpot.country ?? '');
+    const [address, setAddress] = useState(singleSpot.address ?? '');
+    const [city, setCity] = useState(singleSpot.city ?? '');
+    const [state, setState] = useState(singleSpot.state ?? '');
+    const [description, setDescription] = useState(singleSpot.description ?? '');
+    const [name, setName] = useState(singleSpot.name ?? '');
+    const [price, setPrice] = useState(singleSpot.price ?? 0);
+    const [previewImage, setPreviewImage] = useState(originalPreviewImage[0].url ?? '');//assign the original preview image here and hard index into the smallImages for the below
+    const [image1, setImage1] = useState(originalSmallImages[0].url ?? '');
+    const [image2, setImage2] = useState(originalSmallImages[1].url ?? '');
+    const [image3, setImage3] = useState(originalSmallImages[2].url ?? '');
+    const [image4, setImage4] = useState(originalSmallImages[3].url ?? '');
     const [errors, setErrors] = useState({});////////////////////////////////////////////////////////////////
     const form = {country, address, city, state, description, name, price};
 
@@ -61,7 +73,9 @@ function UpdateSpotPage(){
         setErrors(newErrors);
 
          if(!Object.keys(newErrors).length) {
+            //replace the below with a dispatch to a new thunk "updateSpot"
              const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
+             //replace below with history.push to the manage spots page for the user
              history.push(`/spots/${newSpot.id}`);
          };
 

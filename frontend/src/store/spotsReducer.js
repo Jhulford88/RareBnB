@@ -44,6 +44,7 @@ export const fetchSpots = () => async dispatch => {
 export const fetchSingleSpot = (spotId) => async dispatch => {
     const response = await fetch(`/api/spots/${spotId}`);
     const spot = await response.json();
+    console.log('single spot in thunk.......', spot)
     dispatch(loadSingleSpot(spot));
 };
 
@@ -89,7 +90,12 @@ export const fetchSpotsOwnedByUser = () => async dispatch => {
     const response = await csrfFetch('/api/spots/current');
     const spots = await response.json();
     dispatch(loadSpots(spots))
-}
+};
+
+//Update an existing spot
+// export const updateExistingSpot = () => async dispatch => {
+//     const response = await csrfFetch('/api/spots')
+// }
 
 
 
@@ -116,6 +122,7 @@ const spotsReducer = (state = initState, action) => {
             // return spotsState
         case LOAD_SINGLE_SPOT:
             spotsState.singleSpot[action.spot.id] = action.spot;
+            console.log('single spot in reducer.....', spotsState.singleSpot)
             return spotsState
         case POST_SPOT_IMAGE:
             return {...state, singleSpot:{SpotImages: [...state.singleSpot.SpotImages, action.spotImage]}}
