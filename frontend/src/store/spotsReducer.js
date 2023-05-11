@@ -7,7 +7,7 @@ export const LOAD_SPOTS = "spots/LOAD_SPOTS";
 export const LOAD_SINGLE_SPOT = "spots/LOAD_SINGLE_SPOT";
 export const CREATE_SPOT = "spots/CREATE_SPOT";
 export const POST_SPOT_IMAGE = "spots/POST_SPOT_IMAGE";
-
+export const UPDATE_SPOT = "spots/UPDATE_SPOT";
 
 
 
@@ -30,6 +30,11 @@ export const postSpotImage = (data) => ({
     data
 });
 
+export const updateSpot = (updatedSpot) => ({
+    type: UPDATE_SPOT,
+    updatedSpot
+});
+
 
 
 
@@ -42,10 +47,13 @@ export const fetchSpots = () => async dispatch => {
 };
 
 export const fetchSingleSpot = (spotId) => async dispatch => {
+    // console.log('spot id in thunk....................',spotId)
     const response = await fetch(`/api/spots/${spotId}`);
+    // console.log('response in thunk..........', response)
     const spot = await response.json();
-    console.log('single spot in thunk.......', spot)
+    // console.log('single spot in thunk.......', spot)
     dispatch(loadSingleSpot(spot));
+    return spot;
 };
 
 export const createSpot = (form, imageArr, sessionUser) => async dispatch => {
@@ -93,9 +101,23 @@ export const fetchSpotsOwnedByUser = () => async dispatch => {
 };
 
 //Update an existing spot
-// export const updateExistingSpot = () => async dispatch => {
-//     const response = await csrfFetch('/api/spots')
-// }
+export const updateExistingSpot = (form, sessionUser, id) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${id}`, {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(form)
+    });
+    console.log('response in thunk..........', response)
+    if(!response.ok) {
+        const errors = await response.json()
+        return errors
+    } else {
+        const data = await response.json()
+        console.log('newly updated spot in thunk.............', data)
+        dispatch(updateSpot(data))
+        return data
+    }
+}
 
 
 
@@ -116,16 +138,15 @@ const spotsReducer = (state = initState, action) => {
             });
             spotsState.allSpots = updatedSpots
             return spotsState
-            // action.spots.Spots.forEach(spot => {
-            //     spotsState.allSpots[spot.id] = spot;
-            // });
-            // return spotsState
         case LOAD_SINGLE_SPOT:
             spotsState.singleSpot[action.spot.id] = action.spot;
-            console.log('single spot in reducer.....', spotsState.singleSpot)
             return spotsState
         case POST_SPOT_IMAGE:
             return {...state, singleSpot:{SpotImages: [...state.singleSpot.SpotImages, action.spotImage]}}
+        case UPDATE_SPOT:
+            spotsState.allSpots[action.updatedSpot.id] = action.updatedSpot
+            console.log('updated spot in reducer.......', spotsState.allSpots)
+            return spotsState
         default:
             return state;
     }

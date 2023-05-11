@@ -15,11 +15,12 @@ function SpotDetailPage(){
 
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
+        // .then(data => console.log('data from spot detail page.....',data))
      }, [dispatch]);
 
      if (!singleSpot) return null;
 
-     console.log('single spot on detail page.......',singleSpot)
+    //  console.log('single spot on detail page.......',singleSpot)
 
      const handleClick = () => {
         window.alert("Feature coming soon!")

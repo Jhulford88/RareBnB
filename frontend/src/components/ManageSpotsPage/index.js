@@ -28,7 +28,7 @@ function ManageSpotsPage() {
       <button type='button' onClick={() => handleNewSpotClick()}>Create a New Spot</button>
       <ul className='spot-card-gallery-list'>
                 {spots.map((spot) => (
-                    <li className="spot-card">
+                    <li key={spot.id} className="spot-card">
                     <Link to={`/spots/${spot.id}`}>
                     <div className="spot-card-container">
                         <div className="spot-card-image-container">

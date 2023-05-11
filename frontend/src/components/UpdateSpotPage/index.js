@@ -1,55 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpot, fetchSingleSpot } from '../../store/spotsReducer';
+import { fetchSingleSpot, updateExistingSpot } from '../../store/spotsReducer';
 
 //share css with createSpotPage????
 
 
 function UpdateSpotPage(){
 
-    //fetch the existing spot by ID
-    //set the default state for each field conditionally by deconstructing
-    //the returned spot. If the field is empty, set to empty string.
+
     const dispatch = useDispatch();
     const {id} = useParams();
-    const spot = useSelector(state => state.spots.singleSpot);
-    const singleSpot = spot[id];
-    console.log('single spot in updateSpotPage...........',singleSpot)
 
-
-    useEffect(() => {
-        dispatch(fetchSingleSpot(id))
-     }, [dispatch]);
-
-     //seperating the preview image from the others
-     const originalPreviewImage = singleSpot.SpotImages.filter(image => image.preview === true);
-     const originalSmallImages = singleSpot.SpotImages.filter(image => image.preview === false);
 
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
-    const [country, setCountry] = useState(singleSpot.country ?? '');
-    const [address, setAddress] = useState(singleSpot.address ?? '');
-    const [city, setCity] = useState(singleSpot.city ?? '');
-    const [state, setState] = useState(singleSpot.state ?? '');
-    const [description, setDescription] = useState(singleSpot.description ?? '');
-    const [name, setName] = useState(singleSpot.name ?? '');
-    const [price, setPrice] = useState(singleSpot.price ?? 0);
-    const [previewImage, setPreviewImage] = useState(originalPreviewImage[0].url ?? '');//assign the original preview image here and hard index into the smallImages for the below
-    const [image1, setImage1] = useState(originalSmallImages[0].url ?? '');
-    const [image2, setImage2] = useState(originalSmallImages[1].url ?? '');
-    const [image3, setImage3] = useState(originalSmallImages[2].url ?? '');
-    const [image4, setImage4] = useState(originalSmallImages[3].url ?? '');
-    const [errors, setErrors] = useState({});////////////////////////////////////////////////////////////////
-    const form = {country, address, city, state, description, name, price};
+        const [country, setCountry] = useState('');
+        const [address, setAddress] = useState('');
+        const [city, setCity] = useState('');
+        const [state, setState] = useState('');
+        const [description, setDescription] = useState('');
+        const [name, setName] = useState('');
+        const [price, setPrice] = useState('');
+        const [errors, setErrors] = useState({});
+        const form = {country, address, city, state, description, name, price};
 
-    //conditionally add all photos to an array
-    const imageArr = []
-    if(previewImage) imageArr.push({url: previewImage, preview: true});
-    if(image1) imageArr.push({url: image1, preview: false});
-    if(image2) imageArr.push({url: image2, preview: false});
-    if(image3) imageArr.push({url: image3, preview: false});
-    if(image4) imageArr.push({url: image4, preview: false});
+
+        useEffect(() => {
+            dispatch(fetchSingleSpot(id))
+            .then(data => {
+                setCountry(data.country)
+                setAddress(data.address)
+                setCity(data.city)
+                setState(data.state)
+                setDescription(data.description)
+                setName(data.name)
+                setPrice(data.price)
+            })
+        }, [dispatch]);
 
 
     const handleSubmit = async (e) => {
@@ -63,25 +51,18 @@ function UpdateSpotPage(){
         if(description.length < 30) newErrors['description'] = 'Description needs a minimum of 30 characters'
         if(name.length < 1) newErrors['name'] = 'Name is required'
         if(price.length < 1) newErrors['price'] = 'Price is required'
-        if(previewImage.length < 1) newErrors['previewImage'] = 'Preview image is required'
-        if(!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) newErrors['previewImage'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image1.endsWith('.png') && !image1.endsWith('.jpg') && !image1.endsWith('.jpeg')) newErrors['image1'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg')) newErrors['image2'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg')) newErrors['image3'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg')) newErrors['image4'] = 'Image URL must end in .png, .jpg, or .jpeg'
 
         setErrors(newErrors);
 
          if(!Object.keys(newErrors).length) {
-            //replace the below with a dispatch to a new thunk "updateSpot"
-             const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
-             //replace below with history.push to the manage spots page for the user
-             history.push(`/spots/${newSpot.id}`);
+
+             const newSpot = await dispatch(updateExistingSpot(form, sessionUser, id))
+            console.log('newSpot returned on updateSpotPage.....',newSpot)
+             history.push(`/spots/current`);
          };
 
     };
 
-    //Eliminate placeholders? Probably?
 
   return (
     <div className='form-container'>
@@ -159,20 +140,6 @@ function UpdateSpotPage(){
                     onChange={(e) => setPrice(e.target.value)}
                 />
                 {errors.price}
-            </div>
-            <div className='form-section-4'>
-                <h3>Liven up your spot with photos</h3>
-                <p>Submit a link to at least one photo to publish your spot</p>
-                <input type="text" value={previewImage} placeholder="Preview image url" onChange={(e) => setPreviewImage(e.target.value)}/>
-                {errors.previewImage}
-                <input type="text" value={image1} placeholder="Image url" onChange={(e) => setImage1(e.target.value)}/>
-                {errors.image1}
-                <input type="text" value={image2} placeholder="Image url" onChange={(e) => setImage2(e.target.value)}/>
-                {errors.image2}
-                <input type="text" value={image3} placeholder="Image url" onChange={(e) => setImage3(e.target.value)}/>
-                {errors.image3}
-                <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
-                {errors.image4}
             </div>
             <button className='create-spot-submit-button' type='submit' >Create Spot</button>
         </form>
