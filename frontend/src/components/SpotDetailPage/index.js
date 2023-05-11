@@ -12,7 +12,7 @@ function SpotDetailPage(){
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots.singleSpot);
     const singleSpot = spot[id];
-
+    console.log('singgle spot on spot detail page.....', singleSpot)
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
         // .then(data => console.log('data from spot detail page.....',data))

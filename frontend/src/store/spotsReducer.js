@@ -129,7 +129,7 @@ const initState = {allSpots: {}, singleSpot: {}}
 
 // spotsReducer
 const spotsReducer = (state = initState, action) => {
-    const spotsState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
+    const spotsState = {...state, allSpots: {...state.allSpots}, singleSpot: {}};
     switch (action.type) {
         case LOAD_SPOTS:
             const updatedSpots = {}
@@ -144,8 +144,12 @@ const spotsReducer = (state = initState, action) => {
         case POST_SPOT_IMAGE:
             return {...state, singleSpot:{SpotImages: [...state.singleSpot.SpotImages, action.spotImage]}}
         case UPDATE_SPOT:
+            spotsState.allSpots = {}
+            spotsState.singleSpot = {}
+            // console.log('spotState before manipulation.........',spotsState)
             spotsState.allSpots[action.updatedSpot.id] = action.updatedSpot
-            console.log('updated spot in reducer.......', spotsState.allSpots)
+            spotsState.singleSpot = action.updatedSpot
+            // console.log('updated spotState in reducer.......', spotsState)
             return spotsState
         default:
             return state;
@@ -162,16 +166,23 @@ const spotsReducer = (state = initState, action) => {
 //     const spotsState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
 //     switch (action.type) {
 //         case LOAD_SPOTS:
+//             const updatedSpots = {}
 //             action.spots.Spots.forEach(spot => {
-//                 spotsState.allSpots[spot.id] = spot;
+//                 updatedSpots[spot.id] = spot;
 //             });
+//             spotsState.allSpots = updatedSpots
 //             return spotsState
 //         case LOAD_SINGLE_SPOT:
 //             spotsState.singleSpot[action.spot.id] = action.spot;
 //             return spotsState
+//         case POST_SPOT_IMAGE:
+//             return {...state, singleSpot:{SpotImages: [...state.singleSpot.SpotImages, action.spotImage]}}
+//         case UPDATE_SPOT:
+//             spotsState.allSpots[action.updatedSpot.id] = action.updatedSpot
+//             console.log('updated spot in reducer.......', spotsState.allSpots)
+//             return spotsState
 //         default:
 //             return state;
 //     }
-// };
 
 export default spotsReducer;
