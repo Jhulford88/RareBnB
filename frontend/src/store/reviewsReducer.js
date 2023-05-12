@@ -19,6 +19,7 @@ import { csrfFetch } from "./csrf";
 
 
 //initial state
+//Do I need to define the inner nested objects?????
 const initState = {spot: {User: {}}, user: {User: {}, Spot: {}}}
 
 
@@ -31,7 +32,6 @@ const reviewsReducer = (state = initState, action) => {
             return state;
     }
 };
-
 
 
 
