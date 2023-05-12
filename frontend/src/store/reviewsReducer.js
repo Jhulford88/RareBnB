@@ -56,16 +56,12 @@ const reviewsReducer = (state = initState, action) => {
     const newState = {...state}
     switch (action.type) {
         case LOAD_REVIEWS:
-            // console.log('reviews in reducer.......', action.reviews)
             const updatedReviews = {}
             action.reviews.forEach(review => {
-                // console.log('review in reducer forEach.......', review)
                 updatedReviews[review.id] = review;
             });
             return updatedReviews;
         case DELETE_REVIEW:
-            console.log('action.reviewId in reducer...............',action.reviewId)
-            console.log('newState in reducer before delete.......', newState)
             delete newState[action.reviewId]
             return newState;
         default:

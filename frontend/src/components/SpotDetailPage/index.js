@@ -5,6 +5,7 @@ import { fetchSingleSpot } from '../../store/spotsReducer';
 import { fetchReportsThunk } from '../../store/reviewsReducer';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import AddReviewModal from '../AddReviewModal/index';
+import DeleteReviewModal from '../DeleteReviewModal/index';
 import { deleteReviewThunk } from '../../store/reviewsReducer';
 import "./SpotDetailPage.css"
 
@@ -77,7 +78,7 @@ function SpotDetailPage(){
                   <h2>{review.User.firstName}</h2>
                   <h3>{"Need logic for month and year"}</h3>
                   <p>{review.review}</p>
-                  {review.userId === sessionUser.id ? <button onClick={() => handleDeleteClick(review.id, singleSpot.id )}>Delete</button> : null }
+                  {review.userId === sessionUser.id ? <button> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review.id} spotId={singleSpot.id} />}/> </button> : null }
                 </li>
               )
             })}
