@@ -1,16 +1,31 @@
+.create-new-spot-link {
+    padding-right: 150px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.fa-solid {
+    font-size: 16px;
+    padding-right: 10px;
+}
+
+.fa-user-circle {
+    font-size: 24px;
+}
+
 .header-dropdown {
     align-items: center;
     border: 1px;
     border-radius: 25px;
     border-style: solid;
     display: flex;
-    height: 15px;
+    height: 35px;
     justify-content: center;
     padding: 10px;
     position: absolute;
     right: 50px;
     top: 20px;
-    width: 50px;
+    width: 80px;
 }
 
 .header-ul {

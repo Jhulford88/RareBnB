@@ -1,0 +1,28 @@
+.form {
+    /* border: 2px solid red ; */
+    text-align: left;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.create-spot-submit-button {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FF5A5F;
+    margin-top: 10px;
+    height: 30px;
+}
+
+input {
+    width: 95%;
+    background-color: rgb(224, 241, 247);
+}
+
+textarea {
+    width: 95%;
+    height: 100px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(224, 241, 247);
+}

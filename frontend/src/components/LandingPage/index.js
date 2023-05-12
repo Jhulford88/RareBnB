@@ -9,13 +9,12 @@ function LandingPage() {
     const dispatch = useDispatch();
     const spotsObj = useSelector(state => state.spots.allSpots);
     const spots = Object.values(spotsObj);
-
+    // console.log('spots in landing page.............',spots)
      // use useEffect to request the spots info when the page is loaded
      useEffect(() => {
         dispatch(fetchSpots())
      }, [dispatch]);
 
-    //  console.log('spots............',spots)
 
     return (
         <div className='spot-card-gallery-container'>

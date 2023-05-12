@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import "./CreateSpotPage.css"
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpot } from '../../store/spotsReducer';
-import { createSpotImage } from '../../store/spotsReducer';
+import { fetchSingleSpot, updateExistingSpot } from '../../store/spotsReducer';
+
+//share css with createSpotPage????
 
 
-function CreateSpotPage(){
-    const history = useHistory();
-    const [country, setCountry] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [description, setDescription] = useState('');
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [previewImage, setPreviewImage] = useState('');
-    const [image1, setImage1] = useState('');
-    const [image2, setImage2] = useState('');
-    const [image3, setImage3] = useState('');
-    const [image4, setImage4] = useState('');
-    const [errors, setErrors] = useState({});////////////////////////////////////////////////////////////////
+function UpdateSpotPage(){
+
+
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
-    const form = {country, address, city, state, description, name, price};
+    const {id} = useParams();
 
-    //conditionally add all photos to an array
-    const imageArr = []
-    if(previewImage) imageArr.push({url: previewImage, preview: true});
-    if(image1) imageArr.push({url: image1, preview: false});
-    if(image2) imageArr.push({url: image2, preview: false});
-    if(image3) imageArr.push({url: image3, preview: false});
-    if(image4) imageArr.push({url: image4, preview: false});
+
+    const sessionUser = useSelector(state => state.session.user);
+    const history = useHistory();
+        const [country, setCountry] = useState('');
+        const [address, setAddress] = useState('');
+        const [city, setCity] = useState('');
+        const [state, setState] = useState('');
+        const [description, setDescription] = useState('');
+        const [name, setName] = useState('');
+        const [price, setPrice] = useState('');
+        const [errors, setErrors] = useState({});
+        const form = {country, address, city, state, description, name, price};
+
+
+        useEffect(() => {
+            dispatch(fetchSingleSpot(id))
+            .then(data => {
+                setCountry(data.country)
+                setAddress(data.address)
+                setCity(data.city)
+                setState(data.state)
+                setDescription(data.description)
+                setName(data.name)
+                setPrice(data.price)
+            })
+        }, [dispatch]);
 
 
     const handleSubmit = async (e) => {
@@ -45,18 +51,14 @@ function CreateSpotPage(){
         if(description.length < 30) newErrors['description'] = 'Description needs a minimum of 30 characters'
         if(name.length < 1) newErrors['name'] = 'Name is required'
         if(price.length < 1) newErrors['price'] = 'Price is required'
-        if(previewImage.length < 1) newErrors['previewImage'] = 'Preview image is required'
-        if(!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) newErrors['previewImage'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image1.endsWith('.png') && !image1.endsWith('.jpg') && !image1.endsWith('.jpeg')) newErrors['image1'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg')) newErrors['image2'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg')) newErrors['image3'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg')) newErrors['image4'] = 'Image URL must end in .png, .jpg, or .jpeg'
 
         setErrors(newErrors);
 
          if(!Object.keys(newErrors).length) {
-             const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
-             history.push(`/spots/${newSpot.id}`);
+
+             const newSpot = await dispatch(updateExistingSpot(form, sessionUser, id))
+            console.log('newSpot returned on updateSpotPage.....',newSpot)
+             history.push(`/spots/${id}`);
          };
 
     };
@@ -66,7 +68,7 @@ function CreateSpotPage(){
     <div className='form-container'>
         <form className='form' onSubmit={handleSubmit}>
             <div className='form-section-1'>
-                <h2>Create a new Spot</h2>
+                <h2>Update your Spot</h2>
                 <h3>Where's your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label>
@@ -139,24 +141,10 @@ function CreateSpotPage(){
                 />
                 {errors.price}
             </div>
-            <div className='form-section-4'>
-                <h3>Liven up your spot with photos</h3>
-                <p>Submit a link to at least one photo to publish your spot</p>
-                <input type="text" value={previewImage} placeholder="Preview image url" onChange={(e) => setPreviewImage(e.target.value)}/>
-                {errors.previewImage}
-                <input type="text" value={image1} placeholder="Image url" onChange={(e) => setImage1(e.target.value)}/>
-                {errors.image1}
-                <input type="text" value={image2} placeholder="Image url" onChange={(e) => setImage2(e.target.value)}/>
-                {errors.image2}
-                <input type="text" value={image3} placeholder="Image url" onChange={(e) => setImage3(e.target.value)}/>
-                {errors.image3}
-                <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
-                {errors.image4}
-            </div>
             <button className='create-spot-submit-button' type='submit' >Create Spot</button>
         </form>
     </div>
   );
 }
 
-export default CreateSpotPage;
+export default UpdateSpotPage;
