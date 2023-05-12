@@ -5,6 +5,7 @@ import { fetchSingleSpot } from '../../store/spotsReducer';
 import { fetchReportsThunk } from '../../store/reviewsReducer';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import AddReviewModal from '../AddReviewModal/index';
+import { deleteReviewThunk } from '../../store/reviewsReducer';
 import "./SpotDetailPage.css"
 
 
@@ -24,7 +25,7 @@ function SpotDetailPage(){
     const reviewsArray = Object.values(reviewsObj)
     console.log('reviewsArray in spot detail page.............',reviewsArray)
 
-
+  console.log('sessionUser in spot detail page', sessionUser)
 
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
@@ -37,6 +38,10 @@ function SpotDetailPage(){
 
      const handleClick = () => {
         window.alert("Feature coming soon!")
+     }
+
+     const handleDeleteClick = (reviewId, spotId) => {
+        dispatch(deleteReviewThunk(reviewId, spotId))
      }
 
   return (
@@ -64,18 +69,15 @@ function SpotDetailPage(){
         </div>
         <div>
           <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
-          {sessionUser && sessionUser.id !== singleSpot.ownerId && reviewsArray.forEach(review => {
-            if (review.userId === sessionUser) return false
-           }) ? null : <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal />}/></button>}
-           {/* the above logic is faulty. renders when logged out. */}
+          {sessionUser?.id && sessionUser.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal />}/></button> : <p>Be the first to post a review</p> }
           <ul>
             {reviewsArray.map(review => {
-              // console.log('review.review in map........', review)
               return (
                 <li>
                   <h2>{review.User.firstName}</h2>
                   <h3>{"Need logic for month and year"}</h3>
                   <p>{review.review}</p>
+                  {review.userId === sessionUser.id ? <button onClick={() => handleDeleteClick(review.id, singleSpot.id )}>Delete</button> : null }
                 </li>
               )
             })}
