@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpotsOwnedByUser } from '../../store/spotsReducer'
 import { Link, useHistory } from "react-router-dom"
 import "./ManageSpotsPage.css"
-
+import DeleteSpotModal from "../DeleteSpotModal/index";
+// import OpenModalButton from '../OpenModalButton';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 //NEED TO REASSIGN ALL CLASSES AND POPULATE CSS FILE. CURRENTLY CSS IS COMING FROM LANDINGPAGE.CSS!!!!! WTF!!!
 
@@ -19,7 +21,11 @@ function ManageSpotsPage() {
      }, [dispatch]);
 
      const handleNewSpotClick = () => {
-      history.push('/spots/new')
+       history.push('/spots/new')
+      }
+
+      const handleUpdateClick = (spotId) => {
+      history.push(`/spots/${spotId}/edit`)
      }
 
   return (
@@ -37,8 +43,8 @@ function ManageSpotsPage() {
                             <p>{spot.city}, {spot.state}</p>
                             <p>${spot.price} /night</p>
                             <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating : "New")}</p>
-                            <button>Update</button>
-                            <button>Delete</button>
+                            <button type='button' onClick={() => handleUpdateClick(spot.id)}>Update</button>
+                            <button><OpenModalMenuItem itemText="Delete" modalComponent={<DeleteSpotModal spot={spot} />}/></button>
                         </div>
                     </Link>
                 </li>
