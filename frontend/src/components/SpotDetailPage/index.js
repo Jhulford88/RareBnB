@@ -2,20 +2,33 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchSingleSpot } from '../../store/spotsReducer';
+import { fetchReportsThunk } from '../../store/reviewsReducer';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import AddReviewModal from '../AddReviewModal/index';
 import "./SpotDetailPage.css"
 
 
 
 function SpotDetailPage(){
 
-    const {id} = useParams();
+    const sessionUser = useSelector(state => state.session.user);
+    const {id} = useParams();///////////////////////////////////////////////////////////////////////////////
+
     const dispatch = useDispatch();
+
     const spot = useSelector(state => state.spots.singleSpot);
     const singleSpot = spot[id];
-    console.log('singgle spot on spot detail page.....', singleSpot)
+
+    const reviewsObj = useSelector(state => state.reviews)
+    console.log('reviewsObj in spot detail page.............',reviewsObj)
+    const reviewsArray = Object.values(reviewsObj)
+    console.log('reviewsArray in spot detail page.............',reviewsArray)
+
+
+
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
-        // .then(data => console.log('data from spot detail page.....',data))
+        dispatch(fetchReportsThunk(id))
      }, [dispatch]);
 
      if (!singleSpot) return null;
@@ -48,6 +61,26 @@ function SpotDetailPage(){
           <p>{singleSpot.price} night</p>
           <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
           <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
+        </div>
+        <div>
+          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
+          {sessionUser && sessionUser.id !== singleSpot.ownerId && reviewsArray.forEach(review => {
+            if (review.userId === sessionUser) return false
+           }) ? null : <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal />}/></button>}
+           {/* the above logic is faulty. renders when logged out. */}
+          <ul>
+            {reviewsArray.map(review => {
+              // console.log('review.review in map........', review)
+              return (
+                <li>
+                  <h2>{review.User.firstName}</h2>
+                  <h3>{"Need logic for month and year"}</h3>
+                  <p>{review.review}</p>
+                </li>
+              )
+            })}
+          </ul>
+
         </div>
     </div>
   );

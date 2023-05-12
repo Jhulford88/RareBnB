@@ -24,9 +24,8 @@ function ManageSpotsPage() {
        history.push('/spots/new')
       }
 
-      const handleUpdateClick = (spotId) => {
-      history.push(`/spots/${spotId}/edit`)
-     }
+      const handleUpdateClick = (spotId) => history.push(`/spots/${spotId}/edit`)
+
 
   return (
     <div>
@@ -43,10 +42,10 @@ function ManageSpotsPage() {
                             <p>{spot.city}, {spot.state}</p>
                             <p>${spot.price} /night</p>
                             <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating : "New")}</p>
-                            <button type='button' onClick={() => handleUpdateClick(spot.id)}>Update</button>
-                            <button><OpenModalMenuItem itemText="Delete" modalComponent={<DeleteSpotModal spot={spot} />}/></button>
                         </div>
                     </Link>
+                            <button type='button' onClick={() => handleUpdateClick(spot.id)}>Update</button>
+                            <button><OpenModalMenuItem itemText="Delete" modalComponent={<DeleteSpotModal spot={spot} />}/></button>
                 </li>
                 ))}
             </ul>
