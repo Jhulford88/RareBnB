@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
+import "./DeleteSpotModal.css"
+import { deleteSpotThunk } from "../../store/spotsReducer";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 //import thunk to dispatch
-//import css file for modal
 
-function DeleteSpotModal() {
+
+function DeleteSpotModal({spot}) {
+
+    console.log("spot...............",spot)
 
     const { closeModal } = useModal();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const closeDeleteModal = () => {
         return closeModal()
     }
 
     const deleteSpotAction = async () => {
-        await dispatch() //delete thunk needs to be created
+        await dispatch(deleteSpotThunk(spot.id))
+        history.push('/spots/current')
         return closeModal()
     }
 

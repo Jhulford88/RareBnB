@@ -8,7 +8,7 @@ export const LOAD_SINGLE_SPOT = "spots/LOAD_SINGLE_SPOT";
 export const CREATE_SPOT = "spots/CREATE_SPOT";
 export const POST_SPOT_IMAGE = "spots/POST_SPOT_IMAGE";
 export const UPDATE_SPOT = "spots/UPDATE_SPOT";
-
+export const DELETE_SPOT = "spots/DELETE_SPOT";
 
 
 //action creators
@@ -35,6 +35,10 @@ export const updateSpot = (updatedSpot) => ({
     updatedSpot
 });
 
+export const deleteSpot = (id) => ({
+    type: DELETE_SPOT,
+    id
+})
 
 
 
@@ -119,6 +123,24 @@ export const updateExistingSpot = (form, sessionUser, id) => async dispatch => {
     }
 }
 
+//Delete a spot
+export const deleteSpotThunk = (id) => async dispatch => {
+    console.log("Hello from thunk.........")
+    const response = await csrfFetch(`/api/spots/${id}`, {
+        method: "DELETE"
+    });
+    console.log("response in thunk...............",response)
+    if (!response.ok) {
+        const errors = await response.json()
+        console.log('errors in thunjk.......',errors)
+        return errors
+    } else {
+        console.log('response in thunk.......',response)
+        const data = await response.json()
+        console.log('dat in thunk............', data)
+        dispatch(deleteSpot(id))
+    }
+};
 
 
 //initial state
@@ -146,10 +168,12 @@ const spotsReducer = (state = initState, action) => {
         case UPDATE_SPOT:
             spotsState.allSpots = {}
             spotsState.singleSpot = {}
-            // console.log('spotState before manipulation.........',spotsState)
             spotsState.allSpots[action.updatedSpot.id] = action.updatedSpot
             spotsState.singleSpot = action.updatedSpot
-            // console.log('updated spotState in reducer.......', spotsState)
+            return spotsState
+        case DELETE_SPOT:
+            console.log('all spots in the reducer..............',spotsState.allSpots)
+            delete spotsState.allSpots[action.id]
             return spotsState
         default:
             return state;

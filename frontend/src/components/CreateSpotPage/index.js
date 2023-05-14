@@ -46,11 +46,11 @@ function CreateSpotPage(){
         if(name.length < 1) newErrors['name'] = 'Name is required'
         if(price.length < 1) newErrors['price'] = 'Price is required'
         if(previewImage.length < 1) newErrors['previewImage'] = 'Preview image is required'
-        if(!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) newErrors['previewImage'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image1.endsWith('.png') && !image1.endsWith('.jpg') && !image1.endsWith('.jpeg')) newErrors['image1'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg')) newErrors['image2'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg')) newErrors['image3'] = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg')) newErrors['image4'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!previewImage.includes('.png') && !previewImage.includes('.jpg') && !previewImage.includes('.jpeg')) newErrors['previewImage'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image1.includes('.png') && !image1.includes('.jpg') && !image1.includes('.jpeg')) newErrors['image1'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image2.includes('.png') && !image2.includes('.jpg') && !image2.includes('.jpeg')) newErrors['image2'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image3.includes('.png') && !image3.includes('.jpg') && !image3.includes('.jpeg')) newErrors['image3'] = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(!image4.includes('.png') && !image4.includes('.jpg') && !image4.includes('.jpeg')) newErrors['image4'] = 'Image URL must end in .png, .jpg, or .jpeg'
 
         setErrors(newErrors);
 

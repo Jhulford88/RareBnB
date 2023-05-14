@@ -2,28 +2,48 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchSingleSpot } from '../../store/spotsReducer';
+import { fetchReportsThunk } from '../../store/reviewsReducer';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import AddReviewModal from '../AddReviewModal/index';
+import DeleteReviewModal from '../DeleteReviewModal/index';
+import { deleteReviewThunk } from '../../store/reviewsReducer';
 import "./SpotDetailPage.css"
 
 
 
 function SpotDetailPage(){
 
-    const {id} = useParams();
+    const sessionUser = useSelector(state => state.session.user);
+    const {id} = useParams();///////////////////////////////////////////////////////////////////////////////
+
     const dispatch = useDispatch();
+
     const spot = useSelector(state => state.spots.singleSpot);
     const singleSpot = spot[id];
-    console.log('singgle spot on spot detail page.....', singleSpot)
+
+    const reviewsObj = useSelector(state => state.reviews)
+    // console.log('reviewsObj in spot detail page.............',reviewsObj)
+    const reviewsArray = Object.values(reviewsObj)
+    // console.log('reviewsArray in spot detail page.............',reviewsArray)
+
+  // console.log('sessionUser in spot detail page', sessionUser)
+
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
-        // .then(data => console.log('data from spot detail page.....',data))
+        dispatch(fetchReportsThunk(id))
      }, [dispatch]);
 
      if (!singleSpot) return null;
+     if (!reviewsArray) return null;
 
     //  console.log('single spot on detail page.......',singleSpot)
 
      const handleClick = () => {
         window.alert("Feature coming soon!")
+     }
+
+     const handleDeleteClick = (reviewId, spotId) => {
+        dispatch(deleteReviewThunk(reviewId, spotId))
      }
 
   return (
@@ -48,6 +68,23 @@ function SpotDetailPage(){
           <p>{singleSpot.price} night</p>
           <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
           <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
+        </div>
+        <div>
+          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
+          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : <p>Be the first to post a review</p> }
+          <ul>
+            {reviewsArray.map(review => {
+              return (
+                <li>
+                  <h2>{review.User.firstName}</h2>
+                  <h3>{"Need logic for month and year"}</h3>
+                  <p>{review.review}</p>
+                  {review.userId === sessionUser?.id ? <button> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={singleSpot?.id} />}/> </button> : null }
+                </li>
+              )
+            })}
+          </ul>
+
         </div>
     </div>
   );

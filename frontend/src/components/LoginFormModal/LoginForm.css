@@ -1,0 +1,40 @@
+.loginmodal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    padding: 0, 20px;
+    padding-bottom: 20px;
+}
+
+.loginform {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 5px;
+}
+
+.loginpassword {
+    width:300px;
+
+}
+
+.loginusername {
+    width: 300px;
+
+}
+
+.loginbutton {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 40px;
+    background-color: #FF385C;
+    color: white;
+    border: none;
+
+}
+
+.loginerrors {
+    color: #FF385C;
+}
