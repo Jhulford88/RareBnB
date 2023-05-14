@@ -21,6 +21,7 @@ function CreateSpotPage(){
     const [image3, setImage3] = useState('');
     const [image4, setImage4] = useState('');
     const [errors, setErrors] = useState({});////////////////////////////////////////////////////////////////
+    const [isDisabled, setIsDisabled] = useState(true);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const form = {country, address, city, state, description, name, price};
@@ -56,10 +57,33 @@ function CreateSpotPage(){
 
          if(!Object.keys(newErrors).length) {
              const newSpot = await dispatch(createSpot(form, imageArr, sessionUser))
+
+             setCountry("");
+             setAddress("");
+             setCity("");
+             setState("");
+             setDescription("");
+             setName("");
+             setPrice("");
+             setPreviewImage('');
+             setImage1('');
+             setImage2('');
+             setImage3('');
+             setImage4('');
+
              history.push(`/spots/${newSpot.id}`);
          };
 
     };
+
+    //set disabled logic here
+
+    useEffect(() => {
+
+        if(country.length > 1 && address.length > 1 && city.length > 1 && state.length > 1 && description.length > 30 && name.length > 1 && price.length > 1 && previewImage.length > 1) setIsDisabled(false)
+
+
+      }, [isDisabled, country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
 
 
   return (
@@ -153,7 +177,7 @@ function CreateSpotPage(){
                 <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
                 {errors.image4}
             </div>
-            <button className='create-spot-submit-button' type='submit' >Create Spot</button>
+            <button className='create-spot-submit-button' type='submit' disabled={isDisabled} >Create Spot</button>
         </form>
     </div>
   );

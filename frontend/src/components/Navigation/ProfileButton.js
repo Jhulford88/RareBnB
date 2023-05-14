@@ -44,20 +44,20 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu} className="header-dropdown">
+      <button onClick={openMenu} className="header-dropdown-button">
         <i className="fa-solid fa-bars"></i>
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul className={ulClassName} ref={ulRef} id="test">
         {user ? (
-          <>
-            <li>Hello, {user.firstName}</li>
-            <li>{user.email}</li>
-            <li><NavLink exact to="/spots/current">Manage Spots</NavLink></li>
+          <div className="dropdown-greeting-text">
+            <li>Hello, { user.firstName }</li>
+            <li>{ user.email }</li>
+            <li className="manage-spots-link"><NavLink exact to="/spots/current">Manage Spots</NavLink></li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className="log-out-button"onClick={logout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
           <>
             <OpenModalMenuItem

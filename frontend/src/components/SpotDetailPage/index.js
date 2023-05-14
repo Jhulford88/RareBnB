@@ -45,7 +45,7 @@ function SpotDetailPage(){
      const handleDeleteClick = (reviewId, spotId) => {
         dispatch(deleteReviewThunk(reviewId, spotId))
      }
-
+     console.log('average rating on spot detail page.........', singleSpot.avgRating)
   return (
     <div className='main-container'>
         <h1>{singleSpot.name}</h1>
@@ -66,18 +66,22 @@ function SpotDetailPage(){
         <p>{singleSpot.description}</p>
         <div className='booking-box-container'>
           <p>{singleSpot.price} night</p>
-          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
+          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</p>
           <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
         </div>
         <div>
-          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
-          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : <p>Be the first to post a review</p> }
+          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</p>
+          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.length && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <p>Be the first to post a review</p> : null}
+          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : null }
           <ul>
             {reviewsArray.map(review => {
               return (
-                <li>
+                <li key={review.id}>
                   <h2>{review.User.firstName}</h2>
-                  <h3>{"Need logic for month and year"}</h3>
+                  <h3>{new Date(review.createdAt).toLocaleDateString('en-US', {
+                            year: "numeric",
+                            month: "long"
+                        })}</h3>
                   <p>{review.review}</p>
                   {review.userId === sessionUser?.id ? <button> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={singleSpot?.id} />}/> </button> : null }
                 </li>
