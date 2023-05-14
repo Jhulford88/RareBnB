@@ -74,7 +74,7 @@ function SpotDetailPage(){
           {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.length && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <p>Be the first to post a review</p> : null}
           {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : null }
           <ul>
-            {reviewsArray.map(review => {
+            {reviewsArray.reverse().map(review => {
               return (
                 <li key={review.id}>
                   <h2>{review.User.firstName}</h2>
