@@ -63,13 +63,15 @@ function SpotDetailPage(){
           })}
         </div>
         <h2>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName} </h2>
-        <p>{singleSpot.description}</p>
+        <div className='description-and-reserve-box-container'>
+        <p className='description-text'>{singleSpot.description}</p>
+        <div>
         <div className='booking-box-container'>
-          <p>{singleSpot.price} night</p>
-          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</p>
+          <p className='booking-container-price'>${singleSpot.price}<span className='just-night'> night</span></p>
+          <span className='booking-container-reviews'><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</span>
           <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
         </div>
-        <div>
+        </div>
           <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</p>
           {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.length && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <p>Be the first to post a review</p> : null}
           {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : null }
