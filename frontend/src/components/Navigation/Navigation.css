@@ -2,6 +2,7 @@
     padding-right: 150px;
     font-size: 20px;
     text-decoration: none;
+    color: teal;
 }
 
 .fa-solid {
@@ -13,7 +14,7 @@
     font-size: 24px;
 }
 
-.header-dropdown {
+.header-dropdown-button {
     align-items: center;
     border: 1px;
     border-radius: 25px;

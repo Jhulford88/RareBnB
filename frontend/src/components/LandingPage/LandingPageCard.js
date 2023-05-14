@@ -10,10 +10,12 @@ function LandingPageCard({spot}) {
                 <div className="spot-card-image-container">
                     <img className="spot-card-img" src={spot.previewImage}></img>
                 </div>
-                    <p>{spot.city}, {spot.state}</p>
-                    <p>${spot.price} /night</p>
-                    <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating : "New")}</p>
+                <div className="card-lower-half">
+                <p>{spot.city}, {spot.state}</p>
+                <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating.toFixed(2) : "New")}</p>
+                <p className="card-price">${spot.price}<span className="spot-just-night"> night</span></p>
                 </div>
+            </div>
             </Link>
         </li>
     );

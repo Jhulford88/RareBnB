@@ -45,7 +45,7 @@ function SpotDetailPage(){
      const handleDeleteClick = (reviewId, spotId) => {
         dispatch(deleteReviewThunk(reviewId, spotId))
      }
-
+     console.log('average rating on spot detail page.........', singleSpot.avgRating)
   return (
     <div className='main-container'>
         <h1>{singleSpot.name}</h1>
@@ -63,29 +63,34 @@ function SpotDetailPage(){
           })}
         </div>
         <h2>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName} </h2>
-        <p>{singleSpot.description}</p>
-        <div className='booking-box-container'>
-          <p>{singleSpot.price} night</p>
-          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
-          <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
+        <div className='description-and-reserve-box-container'>
+          <p className='description-text'>{singleSpot.description}</p>
+          <div className='booking-box-container'>
+            <p className='booking-container-price'>${singleSpot.price}<span className='just-night'> night</span></p>
+            <span className='booking-container-reviews'><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</span>
+            <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button>
+          </div>
         </div>
-        <div>
-          <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
-          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : <p>Be the first to post a review</p> }
-          <ul>
-            {reviewsArray.map(review => {
+        <div className='review-summary-above-reviews-container'>
+          <span className='review-summary-above-reviews'><i className="fa-solid fa-star"></i>{(singleSpot.avgRating ? singleSpot.avgRating.toFixed(2) : "New" )} {singleSpot.numReviews ? singleSpot.numReviews === 1 ? ` • ${singleSpot.numReviews} Review` : ` • ${singleSpot.numReviews} Reviews` : ''}</span>
+        </div>
+          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.length && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <p>Be the first to post a review</p> : null}
+          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button className='submit-review-button'><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : null }
+          <ul className='review-list'>
+            {reviewsArray.reverse().map(review => {
               return (
-                <li>
-                  <h2>{review.User.firstName}</h2>
-                  <h3>{"Need logic for month and year"}</h3>
+                <li key={review.id}>
+                  <h2 className='reviewer-name'>{review.User.firstName}</h2>
+                  <h3 className='review-date'>{new Date(review.createdAt).toLocaleDateString('en-US', {
+                            year: "numeric",
+                            month: "long"
+                        })}</h3>
                   <p>{review.review}</p>
-                  {review.userId === sessionUser?.id ? <button> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={singleSpot?.id} />}/> </button> : null }
+                  {review.userId === sessionUser?.id ? <button className='delete-button'> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={singleSpot?.id} />}/> </button> : null }
                 </li>
               )
             })}
           </ul>
-
-        </div>
     </div>
   );
 }
