@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function LandingPageCard({spot}) {
 
     return (
-        <li className="spot-card">
+        <li className="spot-card" title={spot.name}>
             <Link to={`/spots/${spot.id}`}>
             <div className="spot-card-container">
                 <div className="spot-card-image-container">

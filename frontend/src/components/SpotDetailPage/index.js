@@ -22,11 +22,11 @@ function SpotDetailPage(){
     const singleSpot = spot[id];
 
     const reviewsObj = useSelector(state => state.reviews)
-    console.log('reviewsObj in spot detail page.............',reviewsObj)
+    // console.log('reviewsObj in spot detail page.............',reviewsObj)
     const reviewsArray = Object.values(reviewsObj)
-    console.log('reviewsArray in spot detail page.............',reviewsArray)
+    // console.log('reviewsArray in spot detail page.............',reviewsArray)
 
-  console.log('sessionUser in spot detail page', sessionUser)
+  // console.log('sessionUser in spot detail page', sessionUser)
 
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
@@ -34,6 +34,7 @@ function SpotDetailPage(){
      }, [dispatch]);
 
      if (!singleSpot) return null;
+     if (!reviewsArray) return null;
 
     //  console.log('single spot on detail page.......',singleSpot)
 
@@ -70,7 +71,7 @@ function SpotDetailPage(){
         </div>
         <div>
           <p><i className="fa-solid fa-star"></i>{(singleSpot.avgRating === 0 ? "New" : singleSpot.avgRating)} {singleSpot.numReviews} {(singleSpot.numReviews === 1 ? "review" : "reviews")}</p>
-          {sessionUser?.id && sessionUser.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal />}/></button> : <p>Be the first to post a review</p> }
+          {sessionUser?.id && sessionUser?.id !== singleSpot.ownerId && !reviewsArray.find(review => review.userId === sessionUser?.id) ? <button><OpenModalMenuItem itemText="Submit Your Review" modalComponent={<AddReviewModal spotId={singleSpot?.id}/>}/></button> : <p>Be the first to post a review</p> }
           <ul>
             {reviewsArray.map(review => {
               return (
@@ -78,7 +79,7 @@ function SpotDetailPage(){
                   <h2>{review.User.firstName}</h2>
                   <h3>{"Need logic for month and year"}</h3>
                   <p>{review.review}</p>
-                  {review.userId === sessionUser.id ? <button> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review.id} spotId={singleSpot.id} />}/> </button> : null }
+                  {review.userId === sessionUser?.id ? <button> <OpenModalMenuItem itemText="Delete" modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={singleSpot?.id} />}/> </button> : null }
                 </li>
               )
             })}
