@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function DeleteSpotModal({spot}) {
 
-    console.log("spot...............",spot)
+    // console.log("spot...............",spot)
 
     const { closeModal } = useModal();
     const dispatch = useDispatch();
