@@ -57,7 +57,7 @@ function UpdateSpotPage(){
          if(!Object.keys(newErrors).length) {
 
              const newSpot = await dispatch(updateExistingSpot(form, sessionUser, id))
-            console.log('newSpot returned on updateSpotPage.....',newSpot)
+            // console.log('newSpot returned on updateSpotPage.....',newSpot)
              history.push(`/spots/${id}`);
          };
 

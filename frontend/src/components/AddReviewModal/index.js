@@ -63,7 +63,7 @@ function AddReviewModal({spotId}) {
                       onMouseEnter={() => setHover(index)}
                       onMouseLeave={() => setHover(rating)}
                     >
-                      <span className="star"><i class="fa-solid fa-star"></i></span>
+                      <span className="star"><i className="fa-solid fa-star"></i></span>
                     </button>
                   );
                 })}
