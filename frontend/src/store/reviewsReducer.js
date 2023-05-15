@@ -48,19 +48,27 @@ export const deleteReviewThunk = (reviewId, spotId) => async dispatch => {
     }
 };
 
+
+//just added a try catch block to this thunk 9:53pm
 export const createReviewThunk = (spotId, review) => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(review)
-    });
-    if (!response.ok) {
-        const errors = await response.json()
-        return errors
-    } else {
-        const data = await response.json()
-        console.log('data in thunk.........', data)
-        dispatch(createReview(data))
+    try{
+        const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(review)
+        });
+        if (!response.ok) {
+            const errors = await response.json()
+            return errors
+        } else {
+            const data = await response.json()
+            console.log('data in thunk.........', data)
+            dispatch(createReview(data))
+        }
+
+    } catch (e) {
+        let response = await e.json()
+        return response
     }
 }
 
