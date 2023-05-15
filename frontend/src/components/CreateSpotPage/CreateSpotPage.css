@@ -26,3 +26,13 @@ textarea {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: rgb(224, 241, 247);
 }
+
+.errors {
+    color: red;
+}
+
+.create-spot-submit-button {
+    margin-left: 150px;
+    margin-top: 20px;
+    width: 120px;
+}

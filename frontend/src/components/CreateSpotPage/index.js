@@ -78,12 +78,12 @@ function CreateSpotPage(){
 
     //set disabled logic here
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(country.length > 1 && address.length > 1 && city.length > 1 && state.length > 1 && description.length > 30 && name.length > 1 && price.length > 1 && previewImage.length > 1) setIsDisabled(false)
+    //     if(country.length > 1 && address.length > 1 && city.length > 1 && state.length > 1 && description.length > 30 && name.length > 1 && price.length > 1 && previewImage.length > 1) setIsDisabled(false)
 
 
-      }, [isDisabled, country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
+    //   }, [isDisabled, country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
 
 
   return (
@@ -94,7 +94,7 @@ function CreateSpotPage(){
                 <h3>Where's your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label>
-                    Country {errors.country}
+                    Country <span className='errors'>{errors.country}</span>
                     <input
                         type="text"
                         value={country}
@@ -103,7 +103,7 @@ function CreateSpotPage(){
                     />
                 </label>
                 <label>
-                    Street Address {errors.address}
+                    Street Address <span className='errors'>{errors.address}</span>
                     <input
                         type="text"
                         value={address}
@@ -112,7 +112,7 @@ function CreateSpotPage(){
                     />
                 </label>
                 <label>
-                    City {errors.city}
+                    City <span className='errors'>{errors.city}</span>
                     <input
                         type="text"
                         value={city}
@@ -121,7 +121,7 @@ function CreateSpotPage(){
                     />
                 </label>
                 <label>
-                    State {errors.state}
+                    State <span className='errors'>{errors.state}</span>
                     <input
                         type="text"
                         value={state}
@@ -138,7 +138,7 @@ function CreateSpotPage(){
                     placeholder="Please type at least 30 characters"
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                {errors.description}
+                <span className='errors'>{errors.description}</span>
             </div>
             <div className='form-section-3'>
                 <h3>Create a title for your spot</h3>
@@ -149,7 +149,7 @@ function CreateSpotPage(){
                     placeholder="Name of your spot"
                     onChange={(e) => setName(e.target.value)}
                 />
-                {errors.name}
+                <span className='errors'>{errors.name}</span>
             </div>
             <div>
                 <h3>Set a base price for your spot</h3>
@@ -161,23 +161,23 @@ function CreateSpotPage(){
                     placeholder="Price per night (USD)"
                     onChange={(e) => setPrice(e.target.value)}
                 />
-                {errors.price}
+                <span className='errors'>{errors.price}</span>
             </div>
             <div className='form-section-4'>
                 <h3>Liven up your spot with photos</h3>
                 <p>Submit a link to at least one photo to publish your spot</p>
                 <input type="text" value={previewImage} placeholder="Preview image url" onChange={(e) => setPreviewImage(e.target.value)}/>
-                {errors.previewImage}
+                <span className='errors'>{errors.previewImage}</span>
                 <input type="text" value={image1} placeholder="Image url" onChange={(e) => setImage1(e.target.value)}/>
-                {errors.image1}
+                <span className='errors'>{errors.image1}</span>
                 <input type="text" value={image2} placeholder="Image url" onChange={(e) => setImage2(e.target.value)}/>
-                {errors.image2}
+                <span className='errors'>{errors.image2}</span>
                 <input type="text" value={image3} placeholder="Image url" onChange={(e) => setImage3(e.target.value)}/>
-                {errors.image3}
+                <span className='errors'>{errors.image3}</span>
                 <input type="text" value={image4} placeholder="Image url" onChange={(e) => setImage4(e.target.value)}/>
-                {errors.image4}
+                <span className='errors'>{errors.image4}</span>
             </div>
-            <button className='create-spot-submit-button' type='submit' disabled={isDisabled} >Create Spot</button>
+            <button className='create-spot-submit-button' type='submit' /*disabled={isDisabled}*/ >Create Spot</button>
         </form>
     </div>
   );
