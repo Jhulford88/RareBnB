@@ -30,7 +30,7 @@ module.exports = {
       }
       },
       review: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       stars: {
         type: Sequelize.INTEGER

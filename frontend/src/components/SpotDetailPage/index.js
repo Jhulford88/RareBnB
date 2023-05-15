@@ -55,12 +55,12 @@ function SpotDetailPage(){
         <div className='image-grid'>
           {singleSpot.SpotImages.map(image => {
             if(image.preview === true) {
-              return <img className='main-image' alt='test' src={image.url}/>
+              return <img key={image.id} className='main-image' alt='test' src={image.url}/>
             } else return null;
           })}
           {singleSpot.SpotImages.map(image => {
             if(image.preview === false) {
-              return <img className='small-image' alt='test' src={image.url}/>
+              return <img key={image.id} className='small-image' alt='test' src={image.url}/>
             } else return null
           })}
         </div>
