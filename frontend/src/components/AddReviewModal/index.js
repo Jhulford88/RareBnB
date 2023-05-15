@@ -46,7 +46,7 @@ function AddReviewModal({spotId}) {
 
 
     return (
-      <>
+      <div className="review-modal-container">
         <h1>How was your stay?</h1>
         <form onSubmit={handleSubmit}>
             <textarea placeholder="Leave your review here..." onChange={(e) => setReviewText(e.target.value)}></textarea>
@@ -67,12 +67,12 @@ function AddReviewModal({spotId}) {
                     </button>
                   );
                 })}
-                <br></br>
-                <span>Stars</span>
+                <br className="break"></br>
+                <span className="stars">Stars</span>
             </div>
-            <button type="submit" disabled={disabled}>Post Your Review</button>
+            <button type="submit" className="post-review-button" disabled={disabled}>Post Your Review</button>
         </form>
-      </>
+      </div>
     );
   }
 
