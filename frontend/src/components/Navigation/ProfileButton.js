@@ -54,7 +54,7 @@ function ProfileButton({ user }) {
           <div className="dropdown-greeting-text">
             <li>Hello, { user.firstName }</li>
             <li>{ user.email }</li>
-            <li className="manage-spots-link"><NavLink exact to="/spots/current">Manage Spots</NavLink></li>
+            <li><NavLink exact to="/spots/current" className="manage-spots-link">Manage Spots</NavLink></li>
             <li>
               <button className="log-out-button"onClick={logout}>Log Out</button>
             </li>

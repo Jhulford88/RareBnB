@@ -28,24 +28,30 @@ function ManageSpotsPage() {
 
 
   return (
-    <div>
+    <div className='main-manage-spot-container'>
+      <div className='upper'>
       <h1>Manage Your Spots</h1>
-      <button type='button' onClick={() => handleNewSpotClick()}>Create a New Spot</button>
+      <button type='button' className='manage-buttons' onClick={() => handleNewSpotClick()}>Create a New Spot</button>
+      </div>
       <ul className='spot-card-gallery-list'>
                 {spots.map((spot) => (
                     <li key={spot.id} className="spot-card">
                     <Link to={`/spots/${spot.id}`}>
                     <div className="spot-card-container">
-                        <div className="spot-card-image-container">
-                            <img className="spot-card-img" alt='test' src={spot.previewImage}></img>
-                        </div>
-                            <p>{spot.city}, {spot.state}</p>
-                            <p>${spot.price} /night</p>
-                            <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating : "New")}</p>
-                        </div>
+                <div className="spot-card-image-container">
+                    <img className="spot-card-img" alt="test" src={spot.previewImage}></img>
+                </div>
+                <div className="card-lower-half">
+                <p>{spot.city}, {spot.state}</p>
+                <p><i className="fa-solid fa-star"></i>{(spot.avgRating ? spot.avgRating.toFixed(2) : "New")}</p>
+                <p className="card-price">${spot.price}<span className="spot-just-night"> night</span></p>
+                </div>
+            </div>
                     </Link>
-                            <button type='button' onClick={() => handleUpdateClick(spot.id)}>Update</button>
-                            <button><OpenModalMenuItem itemText="Delete" modalComponent={<DeleteSpotModal spot={spot} />}/></button>
+                    <div className='bottom-buttons'>
+                            <button type='button' className='manage-buttons' onClick={() => handleUpdateClick(spot.id)}>Update</button>
+                            <button className='manage-buttons'><OpenModalMenuItem itemText="Delete" modalComponent={<DeleteSpotModal spot={spot} />}/></button>
+                    </div>
                 </li>
                 ))}
             </ul>
