@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createReviewThunk } from "../../store/reviewsReducer";
 import { fetchReportsThunk } from "../../store/reviewsReducer";
 import { fetchSingleSpot } from "../../store/spotsReducer";
@@ -14,7 +14,7 @@ function AddReviewModal({spotId}) {
     // initializing stuff
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
 
     // setting up state slices
     const [reviewText, setReviewText] = useState('');

@@ -42,10 +42,12 @@ function SpotDetailPage(){
         window.alert("Feature coming soon!")
      }
 
-     const handleDeleteClick = (reviewId, spotId) => {
-        dispatch(deleteReviewThunk(reviewId, spotId))
-     }
-     console.log('average rating on spot detail page.........', singleSpot.avgRating)
+    //  const handleDeleteClick = (reviewId, spotId) => {
+    //     dispatch(deleteReviewThunk(reviewId, spotId))
+    //  }
+
+    //  console.log('average rating on spot detail page.........', singleSpot.avgRating)
+
   return (
     <div className='main-container'>
         <h1>{singleSpot.name}</h1>
@@ -53,13 +55,13 @@ function SpotDetailPage(){
         <div className='image-grid'>
           {singleSpot.SpotImages.map(image => {
             if(image.preview === true) {
-              return <img className='main-image' src={image.url}/>
-            }
+              return <img className='main-image' alt='test' src={image.url}/>
+            } else return null;
           })}
           {singleSpot.SpotImages.map(image => {
             if(image.preview === false) {
-              return <img className='small-image' src={image.url}/>
-            }
+              return <img className='small-image' alt='test' src={image.url}/>
+            } else return null
           })}
         </div>
         <h2>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName} </h2>

@@ -8,7 +8,7 @@ function LandingPageCard({spot}) {
             <Link to={`/spots/${spot.id}`}>
             <div className="spot-card-container">
                 <div className="spot-card-image-container">
-                    <img className="spot-card-img" src={spot.previewImage}></img>
+                    <img className="spot-card-img" alt="test" src={spot.previewImage}></img>
                 </div>
                 <div className="card-lower-half">
                 <p>{spot.city}, {spot.state}</p>
