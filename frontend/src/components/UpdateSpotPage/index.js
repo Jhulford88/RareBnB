@@ -72,7 +72,7 @@ function UpdateSpotPage(){
                 <h3>Where's your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation</p>
                 <label>
-                    Country {errors.country}
+                    Country <span className='errors'>{errors.country}</span>
                     <input
                         type="text"
                         value={country}
@@ -81,7 +81,7 @@ function UpdateSpotPage(){
                     />
                 </label>
                 <label>
-                    Street Address {errors.address}
+                    Street Address <span className='errors'>{errors.address}</span>
                     <input
                         type="text"
                         value={address}
@@ -90,7 +90,7 @@ function UpdateSpotPage(){
                     />
                 </label>
                 <label>
-                    City {errors.city}
+                    City <span className='errors'>{errors.city}</span>
                     <input
                         type="text"
                         value={city}
@@ -99,7 +99,7 @@ function UpdateSpotPage(){
                     />
                 </label>
                 <label>
-                    State {errors.state}
+                    State <span className='errors'>{errors.state}</span>
                     <input
                         type="text"
                         value={state}
@@ -116,7 +116,7 @@ function UpdateSpotPage(){
                     placeholder="Please type at least 30 characters"
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                {errors.description}
+                <span className='errors'>{errors.description}</span>
             </div>
             <div className='form-section-3'>
                 <h3>Create a title for your spot</h3>
@@ -127,7 +127,7 @@ function UpdateSpotPage(){
                     placeholder="Name of your spot"
                     onChange={(e) => setName(e.target.value)}
                 />
-                {errors.name}
+                <span className='errors'>{errors.name}</span>
             </div>
             <div>
                 <h3>Set a base price for your spot</h3>
@@ -139,9 +139,9 @@ function UpdateSpotPage(){
                     placeholder="Price per night (USD)"
                     onChange={(e) => setPrice(e.target.value)}
                 />
-                {errors.price}
+                <span className='errors'>{errors.price}</span>
             </div>
-            <button className='create-spot-submit-button' type='submit' >Create Spot</button>
+            <button className='create-spot-submit-button' type='submit' >Update your Spot</button>
         </form>
     </div>
   );

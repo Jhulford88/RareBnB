@@ -5,6 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import "./Navigation.css";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ function ProfileButton({ user }) {
           <div className="dropdown-greeting-text">
             <li>Hello, { user.firstName }</li>
             <li>{ user.email }</li>
-            <li className="manage-spots-link"><NavLink exact to="/spots/current">Manage Spots</NavLink></li>
+            <li><NavLink exact to="/spots/current" className="manage-spots-link">Manage Spots</NavLink></li>
             <li>
               <button className="log-out-button"onClick={logout}>Log Out</button>
             </li>

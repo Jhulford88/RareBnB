@@ -1,0 +1,20 @@
+.upper {
+    padding-left: 100px;
+}
+
+.manage-buttons {
+    color: white;
+    background-color: grey;
+    height: 28px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.manage-buttons:hover {
+    cursor: pointer;
+}
+
+.bottom-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

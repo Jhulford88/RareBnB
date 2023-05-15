@@ -111,13 +111,13 @@ export const updateExistingSpot = (form, sessionUser, id) => async dispatch => {
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(form)
     });
-    console.log('response in thunk..........', response)
+    // console.log('response in thunk..........', response)
     if(!response.ok) {
         const errors = await response.json()
         return errors
     } else {
         const data = await response.json()
-        console.log('newly updated spot in thunk.............', data)
+        // console.log('newly updated spot in thunk.............', data)
         dispatch(updateSpot(data))
         return data
     }
@@ -125,19 +125,19 @@ export const updateExistingSpot = (form, sessionUser, id) => async dispatch => {
 
 //Delete a spot
 export const deleteSpotThunk = (id) => async dispatch => {
-    console.log("Hello from thunk.........")
+    // console.log("Hello from thunk.........")
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: "DELETE"
     });
-    console.log("response in thunk...............",response)
+    // console.log("response in thunk...............",response)
     if (!response.ok) {
         const errors = await response.json()
-        console.log('errors in thunjk.......',errors)
+        // console.log('errors in thunjk.......',errors)
         return errors
     } else {
-        console.log('response in thunk.......',response)
+        // console.log('response in thunk.......',response)
         const data = await response.json()
-        console.log('dat in thunk............', data)
+        // console.log('dat in thunk............', data)
         dispatch(deleteSpot(id))
     }
 };
@@ -172,7 +172,7 @@ const spotsReducer = (state = initState, action) => {
             spotsState.singleSpot = action.updatedSpot
             return spotsState
         case DELETE_SPOT:
-            console.log('all spots in the reducer..............',spotsState.allSpots)
+            // console.log('all spots in the reducer..............',spotsState.allSpots)
             delete spotsState.allSpots[action.id]
             return spotsState
         default:
