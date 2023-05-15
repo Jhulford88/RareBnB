@@ -86,7 +86,7 @@ function LoginFormModal() {
 
     useEffect(() => {
 
-      if (credential.length >= 4 || password.length >= 6) setIsDisabled(false)
+      if (credential.length >= 4 && password.length >= 6) setIsDisabled(false)
     }, [isDisabled, credential, password])
 
 
@@ -121,8 +121,8 @@ function LoginFormModal() {
                 <button className='loginbutton' type="submit" disabled={isDisabled}>Log In</button>
                 <button
                 onClick={() => {
-                    setCredential("SAMPLE321")
-                    setPassword("SAMPLE123")
+                    setCredential("IownNothingThree")
+                    setPassword("password")
                 }}
                 type="submit"
                 className="login-demo-button"

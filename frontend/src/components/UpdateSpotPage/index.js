@@ -141,7 +141,7 @@ function UpdateSpotPage(){
                 />
                 <span className='errors'>{errors.price}</span>
             </div>
-            <button className='create-spot-submit-button' type='submit' >Create Spot</button>
+            <button className='create-spot-submit-button' type='submit' >Update your Spot</button>
         </form>
     </div>
   );

@@ -70,7 +70,7 @@ function AddReviewModal({spotId}) {
                 <br className="break"></br>
                 <span className="stars">Stars</span>
             </div>
-            <button type="submit" className="post-review-button" disabled={disabled}>Post Your Review</button>
+            <button type="submit" className="post-review-button" disabled={disabled}>Submit Your Review</button>
         </form>
       </div>
     );
