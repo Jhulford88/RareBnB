@@ -94,7 +94,7 @@ function LoginFormModal() {
     return (
         < div className='loginmodal'>
             <h1>Log In</h1>
-            <form className='loginform' onSubmit={handleSubmit}>
+            <form className='loginform' disabled={isDisabled} onSubmit={handleSubmit}>
                 <label>
                     <input
                         className='loginusername'

@@ -30,7 +30,7 @@ export const createReview = (review) => ({
 export const fetchReportsThunk = (spotId) => async dispatch => {
     const response = await fetch(`/api/spots/${spotId}/reviews`);
     const reviews = await response.json();
-    console.log('reviews in thunk.......', reviews)
+    // console.log('reviews in thunk.......', reviews)
     dispatch(loadReviews(reviews.Reviews));
 };
 
@@ -43,7 +43,7 @@ export const deleteReviewThunk = (reviewId, spotId) => async dispatch => {
         return errors
     } else {
         const data = await response.json()
-        console.log("data in thunk............", data)
+        // console.log("data in thunk............", data)
         dispatch(deleteReview(reviewId))
     }
 };
@@ -62,7 +62,7 @@ export const createReviewThunk = (spotId, review) => async dispatch => {
             return errors
         } else {
             const data = await response.json()
-            console.log('data in thunk.........', data)
+            // console.log('data in thunk.........', data)
             dispatch(createReview(data))
         }
 
