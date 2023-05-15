@@ -37,7 +37,7 @@ function UpdateSpotPage(){
                 setName(data.name)
                 setPrice(data.price)
             })
-        }, [dispatch]);
+        }, [dispatch, id]);
 
 
     const handleSubmit = async (e) => {

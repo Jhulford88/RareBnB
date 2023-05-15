@@ -6,7 +6,7 @@ import { fetchReportsThunk } from '../../store/reviewsReducer';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import AddReviewModal from '../AddReviewModal/index';
 import DeleteReviewModal from '../DeleteReviewModal/index';
-import { deleteReviewThunk } from '../../store/reviewsReducer';
+// import { deleteReviewThunk } from '../../store/reviewsReducer';
 import "./SpotDetailPage.css"
 
 
@@ -31,7 +31,7 @@ function SpotDetailPage(){
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
         dispatch(fetchReportsThunk(id))
-     }, [dispatch]);
+     }, [dispatch, id]);
 
      if (!singleSpot) return null;
      if (!reviewsArray) return null;
