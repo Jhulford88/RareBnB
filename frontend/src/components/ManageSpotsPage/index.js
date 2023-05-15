@@ -37,7 +37,7 @@ function ManageSpotsPage() {
                     <Link to={`/spots/${spot.id}`}>
                     <div className="spot-card-container">
                         <div className="spot-card-image-container">
-                            <img className="spot-card-img" src={spot.previewImage}></img>
+                            <img className="spot-card-img" alt='test' src={spot.previewImage}></img>
                         </div>
                             <p>{spot.city}, {spot.state}</p>
                             <p>${spot.price} /night</p>

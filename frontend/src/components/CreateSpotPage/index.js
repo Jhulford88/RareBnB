@@ -3,7 +3,7 @@ import "./CreateSpotPage.css"
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spotsReducer';
-import { createSpotImage } from '../../store/spotsReducer';
+// import { createSpotImage } from '../../store/spotsReducer';
 
 
 function CreateSpotPage(){
