@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createReviewThunk } from "../../store/reviewsReducer";
 import { fetchReportsThunk } from "../../store/reviewsReducer";
 import { fetchSingleSpot } from "../../store/spotsReducer";
 import "./AddReviewModal.css";
-//import thunk to dispatch
 
 
 function AddReviewModal({spotId}) {
@@ -14,7 +12,7 @@ function AddReviewModal({spotId}) {
     // initializing stuff
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    // const history = useHistory();
+
 
     // setting up state slices
     const [reviewText, setReviewText] = useState('');
@@ -23,11 +21,11 @@ function AddReviewModal({spotId}) {
     const [disabled, setDisabled] = useState(true)
 
 
-
     // building review object for thunk prop
     const review = {}
     review.review = reviewText;
     review.stars = rating;
+
 
     //dispatching thunk on button click
     const handleSubmit = async (e) => {
@@ -38,10 +36,9 @@ function AddReviewModal({spotId}) {
         return closeModal()
     }
 
-
+    //dynamic form diasabling
     useEffect(() => {
       if(reviewText.length > 10 && rating) setDisabled(false)
-
   }, [reviewText, rating])
 
 

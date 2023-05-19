@@ -3,11 +3,16 @@ import "./CreateSpotPage.css"
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spotsReducer';
-// import { createSpotImage } from '../../store/spotsReducer';
 
 
 function CreateSpotPage(){
+
+    //initialize things
     const history = useHistory();
+    const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
+
+    //set up a bunch of slices of state
     const [country, setCountry] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -20,13 +25,14 @@ function CreateSpotPage(){
     const [image2, setImage2] = useState('');
     const [image3, setImage3] = useState('');
     const [image4, setImage4] = useState('');
-    const [errors, setErrors] = useState({});////////////////////////////////////////////////////////////////
+    const [errors, setErrors] = useState({});
     const [isDisabled, setIsDisabled] = useState(true);
-    const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
+
+    //build form for transmital
     const form = {country, address, city, state, description, name, price};
 
-    //conditionally add all photos to an array
+
+    //conditionally add all photos to an array to be mapped in return
     const imageArr = []
     if(previewImage) imageArr.push({url: previewImage, preview: true});
     if(image1) imageArr.push({url: image1, preview: false});
@@ -35,6 +41,7 @@ function CreateSpotPage(){
     if(image4) imageArr.push({url: image4, preview: false});
 
 
+    //form submission: error handling, thunk dispatch, field resets, redirect
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -75,15 +82,6 @@ function CreateSpotPage(){
          };
 
     };
-
-    //set disabled logic here
-
-    // useEffect(() => {
-
-    //     if(country.length > 1 && address.length > 1 && city.length > 1 && state.length > 1 && description.length > 30 && name.length > 1 && price.length > 1 && previewImage.length > 1) setIsDisabled(false)
-
-
-    //   }, [isDisabled, country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
 
 
   return (

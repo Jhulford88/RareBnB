@@ -1,25 +1,24 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteReviewThunk } from "../../store/reviewsReducer";
 import "./DeleteReviewModal.css"
 
 
 function DeleteReviewModal({reviewId, spotId}) {
 
-
+    //initialize things
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    // const history = useHistory();
 
+    //closing modal
     const closeDeleteReviewModal = () => {
         return closeModal()
     }
 
+    //dispatch thunk
     const deleteReviewAction = async () => {
         await dispatch(deleteReviewThunk(reviewId, spotId))
-        // history.push('/spots/current')
         return closeModal()
     }
 
