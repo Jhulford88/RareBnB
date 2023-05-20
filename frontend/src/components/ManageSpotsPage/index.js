@@ -2,29 +2,33 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpotsOwnedByUser } from '../../store/spotsReducer'
 import { Link, useHistory } from "react-router-dom"
-import "./ManageSpotsPage.css"
 import DeleteSpotModal from "../DeleteSpotModal/index";
-// import OpenModalButton from '../OpenModalButton';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import "./ManageSpotsPage.css"
 
-//NEED TO REASSIGN ALL CLASSES AND POPULATE CSS FILE. CURRENTLY CSS IS COMING FROM LANDINGPAGE.CSS!!!!! WTF!!!
 
 function ManageSpotsPage() {
 
+  //initialize things
   const history = useHistory();
   const dispatch = useDispatch();
-    const spotsObj = useSelector(state => state.spots.allSpots);
-    const spots = Object.values(spotsObj);
 
-     useEffect(() => {
-        dispatch(fetchSpotsOwnedByUser())
-     }, [dispatch]);
+  //listen for spots updates and produce array
+  const spotsObj = useSelector(state => state.spots.allSpots);
+  const spots = Object.values(spotsObj);
 
-     const handleNewSpotClick = () => {
-       history.push('/spots/new')
-      }
+  //dispatch thunk
+  useEffect(() => {
+    dispatch(fetchSpotsOwnedByUser())
+  }, [dispatch]);
 
-      const handleUpdateClick = (spotId) => history.push(`/spots/${spotId}/edit`)
+  //onClick behavior - tile
+  const handleNewSpotClick = () => {
+    history.push('/spots/new')
+  }
+
+  // onClick behavior - update
+  const handleUpdateClick = (spotId) => history.push(`/spots/${spotId}/edit`)
 
 
   return (

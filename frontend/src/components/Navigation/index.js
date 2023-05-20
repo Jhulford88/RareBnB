@@ -6,6 +6,8 @@ import './Navigation.css';
 import logo from "../../assets/RareBnB.png"
 
 function Navigation({ isLoaded }){
+
+  //listen for user session
   const sessionUser = useSelector(state => state.session.user);
 
   return (

@@ -8,10 +8,15 @@ import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./Navigation.css";
 
 function ProfileButton({ user }) {
+
+  //intialize things
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const history = useHistory();
+
+  //state slices
+  const [showMenu, setShowMenu] = useState(false);
+
 
   const openMenu = () => {
     if (showMenu) return;

@@ -6,11 +6,15 @@ import "./landingPage.css"
 
 function LandingPage() {
 
+    //initialize things
     const dispatch = useDispatch();
+
+
+    //listen for changes to spots and produce array
     const spotsObj = useSelector(state => state.spots.allSpots);
     const spots = Object.values(spotsObj);
-    // console.log('spots in landing page.............',spots)
-     // use useEffect to request the spots info when the page is loaded
+
+     // request the spots info when the page is loaded
      useEffect(() => {
         dispatch(fetchSpots())
      }, [dispatch]);

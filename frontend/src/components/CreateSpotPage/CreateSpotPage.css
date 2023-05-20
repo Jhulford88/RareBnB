@@ -1,11 +1,3 @@
-.form {
-    text-align: left;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
 .create-spot-submit-button {
     margin-left: auto;
     margin-right: auto;
@@ -13,6 +5,26 @@
     margin-top: 10px;
     height: 30px;
 }
+
+.create-spot-submit-button {
+    margin-left: 150px;
+    margin-top: 20px;
+    width: 120px;
+}
+
+
+.errors {
+    color: red;
+}
+
+
+.form {
+    text-align: left;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 input {
     width: 95%;
@@ -24,14 +36,4 @@ textarea {
     height: 100px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: rgb(224, 241, 247);
-}
-
-.errors {
-    color: red;
-}
-
-.create-spot-submit-button {
-    margin-left: 150px;
-    margin-top: 20px;
-    width: 120px;
 }

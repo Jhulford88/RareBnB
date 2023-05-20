@@ -3,46 +3,53 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleSpot, updateExistingSpot } from '../../store/spotsReducer';
 
-//share css with createSpotPage????
-
 
 function UpdateSpotPage(){
 
 
+    //initialize things
     const dispatch = useDispatch();
     const {id} = useParams();
-
-
-    const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
-        const [country, setCountry] = useState('');
-        const [address, setAddress] = useState('');
-        const [city, setCity] = useState('');
-        const [state, setState] = useState('');
-        const [description, setDescription] = useState('');
-        const [name, setName] = useState('');
-        const [price, setPrice] = useState('');
-        const [errors, setErrors] = useState({});
-        const form = {country, address, city, state, description, name, price};
 
 
-        useEffect(() => {
-            dispatch(fetchSingleSpot(id))
-            .then(data => {
-                setCountry(data.country)
-                setAddress(data.address)
-                setCity(data.city)
-                setState(data.state)
-                setDescription(data.description)
-                setName(data.name)
-                setPrice(data.price)
-            })
-        }, [dispatch, id]);
+    //listen for user session
+    const sessionUser = useSelector(state => state.session.user);
+
+    //state slices
+    const [country, setCountry] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [description, setDescription] = useState('');
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [errors, setErrors] = useState({});
+
+    //compile state into object to send with thunk
+    const form = {country, address, city, state, description, name, price};
 
 
+    //dispatch single spot thunk
+    useEffect(() => {
+        dispatch(fetchSingleSpot(id))
+        .then(data => {
+            setCountry(data.country)
+            setAddress(data.address)
+            setCity(data.city)
+            setState(data.state)
+            setDescription(data.description)
+            setName(data.name)
+            setPrice(data.price)
+        })
+    }, [dispatch, id]);
+
+
+    //onSubmit behavior - form
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        //validattion errors
         const newErrors = {};
         if(country.length < 1) newErrors['country'] = 'Country is required'
         if(address.length < 1) newErrors['address'] = 'Address is required'
@@ -57,7 +64,6 @@ function UpdateSpotPage(){
          if(!Object.keys(newErrors).length) {
 
              await dispatch(updateExistingSpot(form, sessionUser, id))
-            // console.log('newSpot returned on updateSpotPage.....',newSpot)
              history.push(`/spots/${id}`);
          };
 

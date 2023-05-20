@@ -1,16 +1,23 @@
 
-  #star-button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-  }
-  .on {
-    color: gold;
-  }
   .off {
     color: #ccc;
   }
+
+
+  .on {
+    color: gold;
+  }
+
+
+  .post-review-button {
+    background-color: #FF385C;
+    color: white;
+    width: 300px;
+    height: 50px;
+    box-shadow: 1px 5px 5px black;
+    margin: 20px;
+  }
+
 
   .review-modal-container {
     display: flex;
@@ -22,20 +29,21 @@
     padding-bottom: 20px;
   }
 
-  .post-review-button {
-    background-color: #FF385C;
-    color: white;
-    width: 300px;
-    height: 50px;
-    box-shadow: 1px 5px 5px black;
-    margin: 20px;
+
+  .star {
+    margin-left: 20px;
+
   }
+
 
   .stars {
     margin-left: 145px;
   }
 
-  .star {
-    margin-left: 20px;
 
+  #star-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
   }

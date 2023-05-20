@@ -6,47 +6,43 @@ import { fetchReportsThunk } from '../../store/reviewsReducer';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import AddReviewModal from '../AddReviewModal/index';
 import DeleteReviewModal from '../DeleteReviewModal/index';
-// import { deleteReviewThunk } from '../../store/reviewsReducer';
 import "./SpotDetailPage.css"
 
 
 
 function SpotDetailPage(){
 
-    const sessionUser = useSelector(state => state.session.user);
-    const {id} = useParams();///////////////////////////////////////////////////////////////////////////////
-
+    //initialize things
+    const {id} = useParams();
     const dispatch = useDispatch();
 
+    //listen for user session
+    const sessionUser = useSelector(state => state.session.user);
+
+    //listen for single spot
     const spot = useSelector(state => state.spots.singleSpot);
     const singleSpot = spot[id];
 
+    //listen for reviews and produce array
     const reviewsObj = useSelector(state => state.reviews)
-    // console.log('reviewsObj in spot detail page.............',reviewsObj)
     const reviewsArray = Object.values(reviewsObj)
-    // console.log('reviewsArray in spot detail page.............',reviewsArray)
 
-  // console.log('sessionUser in spot detail page', sessionUser)
-
+    //dispatch thunks
     useEffect(() => {
         dispatch(fetchSingleSpot(id))
         dispatch(fetchReportsThunk(id))
      }, [dispatch, id]);
 
+     //forcing delay on load
      if (!singleSpot) return null;
      if (!reviewsArray) return null;
 
-    //  console.log('single spot on detail page.......',singleSpot)
 
+     //alert user bookings is not yet available
      const handleClick = () => {
         window.alert("Feature coming soon!")
      }
 
-    //  const handleDeleteClick = (reviewId, spotId) => {
-    //     dispatch(deleteReviewThunk(reviewId, spotId))
-    //  }
-
-    //  console.log('average rating on spot detail page.........', singleSpot.avgRating)
 
   return (
     <div className='main-container'>
