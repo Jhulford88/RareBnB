@@ -2,36 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { createReviewThunk } from "../../store/reviewsReducer";
-import { fetchReportsThunk } from "../../store/reviewsReducer";
-import { fetchSingleSpot } from "../../store/spotsReducer";
 import "./CreateBookingModal.css";
 
 function CreateBookingModal({ spotId }) {
-  // initializing stuff
+  // Initializing stuff
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   // const history = useHistory();
 
-  // setting up state slices
-  //   const [reviewText, setReviewText] = useState("");
-  //   const [rating, setRating] = useState(0);
-  //   const [hover, setHover] = useState(0);
+  // State
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [disabled, setDisabled] = useState(true);
 
-  // building review object for thunk prop
-  //   const review = {};
-  //   review.review = reviewText;
-  //   review.stars = rating;
+  // Building review object for thunk prop
+  const booking = {};
+  booking.startDate = startDate;
+  booking.endDate = endDate;
 
-  //dispatching thunk on button click
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     await dispatch(createReviewThunk(spotId, review));
-  //     await dispatch(fetchReportsThunk(spotId));
-  //     await dispatch(fetchSingleSpot(spotId));
-  //     return closeModal();
-  //   };
+  // Dispatching thunk on button click
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    return closeModal();
+  };
 
   //   useEffect(() => {
   //     if (reviewText.length > 10 && rating) setDisabled(false);
@@ -39,42 +33,36 @@ function CreateBookingModal({ spotId }) {
 
   return (
     <div className="review-modal-container">
-      <h1>How was your stay?</h1>
-      {/* <form onSubmit={handleSubmit}>
-        <textarea
-          placeholder="Leave your review here..."
-          onChange={(e) => setReviewText(e.target.value)}
-        ></textarea>
-        <div className="star-rating">
-          {[1, 2, 3, 4, 5].map((star, index) => {
-            index += 1;
-            return (
-              <button
-                id="star-button"
-                type="button"
-                key={index}
-                className={index <= (hover || rating) ? "on" : "off"}
-                onClick={() => setRating(index)}
-                onMouseEnter={() => setHover(index)}
-                onMouseLeave={() => setHover(rating)}
-              >
-                <span className="star">
-                  <i className="fa-solid fa-star"></i>
-                </span>
-              </button>
-            );
-          })}
-          <br className="break"></br>
-          <span className="stars">Stars</span>
-        </div>
+      <h1>Book your stay!</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Start Date <span className="errors">{/*errors.startDate*/}</span>
+          <input
+            type="date"
+            value={startDate}
+            placeholder="Start Date"
+            onChange={(e) => setStartDate(e.target.value)}
+            className="start-date"
+          />
+        </label>
+        <label>
+          End Date <span className="errors">{/*errors.endDate*/}</span>
+          <input
+            type="date"
+            value={endDate}
+            placeholder="End Date"
+            onChange={(e) => setEndDate(e.target.value)}
+            className="end-date"
+          />
+        </label>
         <button
           type="submit"
           className="post-review-button"
           disabled={disabled}
         >
-          Submit Your Review
+          Reserve
         </button>
-      </form> */}
+      </form>
     </div>
   );
 }
