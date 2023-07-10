@@ -8,25 +8,21 @@ import AddReviewModal from "../AddReviewModal/index";
 import DeleteReviewModal from "../DeleteReviewModal/index";
 import OpenBookingModalButton from "../OpenBookingModalButton";
 import CreateBookingModal from "../CreateBookingModal";
-// import { deleteReviewThunk } from '../../store/reviewsReducer';
 import "./SpotDetailPage.css";
 
 function SpotDetailPage() {
-  const sessionUser = useSelector((state) => state.session.user);
-  const { id } = useParams(); ///////////////////////////////////////////////////////////////////////////////
-
+  //Initialize Things
+  const { id } = useParams();
   const dispatch = useDispatch();
 
+  //State
   const spot = useSelector((state) => state.spots.singleSpot);
   const singleSpot = spot[id];
-
+  const sessionUser = useSelector((state) => state.session.user);
   const reviewsObj = useSelector((state) => state.reviews);
-  // console.log('reviewsObj in spot detail page.............',reviewsObj)
   const reviewsArray = Object.values(reviewsObj);
-  // console.log('reviewsArray in spot detail page.............',reviewsArray)
 
-  // console.log('sessionUser in spot detail page', sessionUser)
-
+  //Dispatch Thunk to get single spot and reviews
   useEffect(() => {
     dispatch(fetchSingleSpot(id));
     dispatch(fetchReportsThunk(id));
@@ -34,18 +30,6 @@ function SpotDetailPage() {
 
   if (!singleSpot) return null;
   if (!reviewsArray) return null;
-
-  //  console.log('single spot on detail page.......',singleSpot)
-
-  const handleClick = () => {
-    window.alert("Feature coming soon!");
-  };
-
-  //  const handleDeleteClick = (reviewId, spotId) => {
-  //     dispatch(deleteReviewThunk(reviewId, spotId))
-  //  }
-
-  //  console.log('average rating on spot detail page.........', singleSpot.avgRating)
 
   return (
     <div className="main-container">
@@ -100,12 +84,11 @@ function SpotDetailPage() {
                 : ` • ${singleSpot.numReviews} Reviews`
               : ""}
           </span>
-          {/* <button type="button" onClick={(e) => {handleClick(e)}} className="reserve-button">Reserve</button> */}
           <div>
             <OpenBookingModalButton
               className="open-booking-modal-button"
               buttonText="Reserve"
-              modalComponent={<CreateBookingModal />}
+              modalComponent={<CreateBookingModal spotId={singleSpot?.id} />}
             />
           </div>
         </div>
