@@ -5,6 +5,7 @@ import { getUserBookingsThunk } from "../../store/bookingsReducer";
 import OpenModalButton from "../OpenModalButton";
 import UpdateBookingModal from "../UpdateBookingModal";
 import "./MyBookingsPage.css";
+import DeleteBookingModal from "../DeleteBookingModal";
 
 function MyBookingsPage() {
   //Initialize things
@@ -57,6 +58,16 @@ function MyBookingsPage() {
               buttonText="Update"
               modalComponent={
                 <UpdateBookingModal
+                  bookingId={booking.id}
+                  setIsUpdated={setIsUpdated}
+                />
+              }
+            />
+            <OpenModalButton
+              className="open-delete-booking-modal-button"
+              buttonText="Delete"
+              modalComponent={
+                <DeleteBookingModal
                   bookingId={booking.id}
                   setIsUpdated={setIsUpdated}
                 />
