@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { getUserBookingsThunk } from "../../store/bookingsReducer";
+import OpenModalButton from "../OpenModalButton";
+import UpdateBookingModal from "../UpdateBookingModal";
 import "./MyBookingsPage.css";
 
 function MyBookingsPage() {
@@ -46,6 +48,11 @@ function MyBookingsPage() {
               <span className="check-in-out">Check-out</span> &nbsp;
               {new Date(booking.endDate).toLocaleDateString("en-US")}
             </p>
+            <OpenModalButton
+              className="open-update-booking-modal-button"
+              buttonText="Update"
+              modalComponent={<UpdateBookingModal />}
+            />
           </div>
         </div>
       </li>
