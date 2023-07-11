@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { getUserBookingsThunk } from "../../store/bookingsReducer";
@@ -15,10 +15,14 @@ function MyBookingsPage() {
   const bookings = useSelector((state) => state.bookings.user.Bookings);
   const sessionUser = useSelector((state) => state.session.user);
 
+  //State
+  const [isUpdated, setIsUpdated] = useState(false);
+
   //Dispatch thunk to load user bookings
   useEffect(() => {
     dispatch(getUserBookingsThunk());
-  }, [dispatch]);
+    setIsUpdated(false);
+  }, [dispatch, isUpdated]);
 
   //Build cards to display current bookings
   let bookingsCards = bookings?.map((booking) => {
@@ -51,7 +55,12 @@ function MyBookingsPage() {
             <OpenModalButton
               className="open-update-booking-modal-button"
               buttonText="Update"
-              modalComponent={<UpdateBookingModal bookingId={booking.id} />}
+              modalComponent={
+                <UpdateBookingModal
+                  bookingId={booking.id}
+                  setIsUpdated={setIsUpdated}
+                />
+              }
             />
           </div>
         </div>

@@ -6,7 +6,7 @@ import { createBookingThunk } from "../../store/bookingsReducer";
 import { updateBookingThunk } from "../../store/bookingsReducer";
 import "./UpdateBookingModal.css";
 
-function UpdateBookingModal({ bookingId }) {
+function UpdateBookingModal({ bookingId, setIsUpdated }) {
   // Initializing stuff
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ function UpdateBookingModal({ bookingId }) {
     e.preventDefault();
 
     dispatch(updateBookingThunk(form, bookingId));
+    setIsUpdated(true);
 
     return closeModal();
   };
