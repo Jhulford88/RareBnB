@@ -22,20 +22,36 @@ function MyBookingsPage() {
 
   //   const handleUpdateClick = (spotId) => history.push(`/spots/${spotId}/edit`)
 
-  let bookingsCards = bookings.map((booking) => {
+  let bookingsCards = bookings?.map((booking) => {
     return (
-      <li key={booking.id}>
-        <div>{booking.Spot.name}</div>
-        <div>{booking.startDate}</div>
-        <div>{booking.endDate}</div>
+      <li className="booking-spot-card" key={booking.id}>
+        <Link to={`/spots/${booking.Spot.id}`}>
+          <div className="booking-spot-card-container">
+            <div className="booking-spot-card-image-container">
+              <img
+                className="booking-spot-card-img"
+                alt="test"
+                src={booking.Spot.previewImage}
+              ></img>
+            </div>
+            <div className="booking-card-lower-half">
+              <p>
+                {booking.Spot.city}, {booking.Spot.state}
+              </p>
+              <p>{booking.Spot.name}</p>
+              <p>{booking.startDate}</p>
+              <p>{booking.endDate}</p>
+            </div>
+          </div>
+        </Link>
       </li>
     );
   });
 
   return (
     <div className="main-my-bookings-container">
-      <h1> Hello from My Bookings</h1>
-      <ul>{bookingsCards}</ul>
+      <h1 className="my-bookings-header"> View Your Current Bookings</h1>
+      <ul className="booking-card-gallery">{bookingsCards}</ul>
     </div>
   );
 }
