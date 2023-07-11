@@ -3,15 +3,16 @@
 import { csrfFetch } from "./csrf";
 
 // -----------TYPE VARIABLES ------------
-export const LOAD_BOOKING = "bookings/LOAD_BOOKING";
+export const LOAD_USER_BOOKINGS = "bookings/LOAD_USER_BOOKINGS";
 
 // ---------- ACTION CREATORS ----------
-export const loadBooking = (booking) => ({
-  type: LOAD_BOOKING,
-  booking,
+export const loadUserBookings = (bookings) => ({
+  type: LOAD_USER_BOOKINGS,
+  bookings,
 });
 
 // ---------- THUNKS ----------
+//Create a new booking
 export const createBookingThunk = (form, spotId) => async (dispatch) => {
   let response;
   try {
@@ -30,14 +31,21 @@ export const createBookingThunk = (form, spotId) => async (dispatch) => {
   }
 };
 
+//Get all of the Current User's Bookings
+export const getUserBookingsThunk = () => async (dispatch) => {
+  const response = await fetch("/api/bookings/current");
+  const bookings = await response.json();
+  dispatch(loadUserBookings(bookings));
+};
 // ---------- INITIAL STATE -------------
 const initialState = { user: {}, spot: {} };
 
 // ---------- REDUCER ----------
 const bookingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_BOOKING:
-      return;
+    case LOAD_USER_BOOKINGS:
+      let userBookingsState = { ...state, user: { ...action.bookings } };
+      return userBookingsState;
     default:
       return state;
   }
