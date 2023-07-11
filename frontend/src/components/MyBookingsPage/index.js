@@ -13,42 +13,46 @@ function MyBookingsPage() {
   const bookings = useSelector((state) => state.bookings.user.Bookings);
   const sessionUser = useSelector((state) => state.session.user);
 
+  //Dispatch thunk to load user bookings
   useEffect(() => {
     dispatch(getUserBookingsThunk());
   }, [dispatch]);
 
-  //  const handleNewSpotClick = () => {
-  //    history.push('/spots/new')
-  //   }
-
-  //   const handleUpdateClick = (spotId) => history.push(`/spots/${spotId}/edit`)
-
+  //Build cards to display current bookings
   let bookingsCards = bookings?.map((booking) => {
     return (
       <li className="booking-spot-card" key={booking.id}>
-        <Link to={`/spots/${booking.Spot.id}`}>
-          <div className="booking-spot-card-container">
-            <div className="booking-spot-card-image-container">
+        <div className="booking-spot-card-container">
+          <div className="booking-spot-card-image-container">
+            <Link to={`/spots/${booking.Spot.id}`}>
               <img
                 className="booking-spot-card-img"
                 alt="test"
                 src={booking.Spot.previewImage}
               ></img>
-            </div>
-            <div className="booking-card-lower-half">
-              <p>
-                {booking.Spot.city}, {booking.Spot.state}
-              </p>
-              <p>{booking.Spot.name}</p>
-              <p>{booking.startDate}</p>
-              <p>{booking.endDate}</p>
-            </div>
+            </Link>
           </div>
-        </Link>
+          <div className="booking-card-lower-half">
+            <p className="booking-spot-name">{booking.Spot.name}</p>
+            <p>
+              {booking.Spot.city}, {booking.Spot.state}
+            </p>
+            <p>
+              <span className="check-in-out">Check-in</span> &nbsp;
+              {new Date(booking.startDate).toLocaleDateString("en-US")}
+            </p>
+            <p>
+              {" "}
+              <span className="check-in-out">Check-out</span> &nbsp;
+              {new Date(booking.endDate).toLocaleDateString("en-US")}
+            </p>
+          </div>
+        </div>
       </li>
     );
   });
 
+  //If user logs out, redirect to landingPage
   if (!sessionUser) history.push("/");
 
   return (

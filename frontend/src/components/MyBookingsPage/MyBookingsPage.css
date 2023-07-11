@@ -53,3 +53,11 @@
 .my-bookings-header {
     text-align: center;
 }
+
+.check-in-out {
+    font-weight: bolder;
+}
+
+.booking-spot-name {
+    font-weight: bolder;
+}
