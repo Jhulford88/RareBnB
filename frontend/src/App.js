@@ -28,7 +28,7 @@ function App() {
           <Route exact path="/spots/current" component={ManageSpotsPage} />
           <Route exact path="/spots/:id/edit" component={UpdateSpotPage} />
           <Route exact path="/spots/:id" component={SpotDetailPage} />
-          <Route exact path="/bookings/current" component={MyBookingsPage} />
+          <Route exact path="/bookings/:id" component={MyBookingsPage} />
         </Switch>
       )}
     </>

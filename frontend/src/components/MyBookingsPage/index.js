@@ -11,6 +11,7 @@ function MyBookingsPage() {
 
   //UseSelectors
   const bookings = useSelector((state) => state.bookings.user.Bookings);
+  const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(getUserBookingsThunk());
@@ -47,6 +48,8 @@ function MyBookingsPage() {
       </li>
     );
   });
+
+  if (!sessionUser) history.push("/");
 
   return (
     <div className="main-my-bookings-container">
