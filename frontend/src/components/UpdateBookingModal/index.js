@@ -3,9 +3,10 @@ import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createBookingThunk } from "../../store/bookingsReducer";
+import { updateBookingThunk } from "../../store/bookingsReducer";
 import "./UpdateBookingModal.css";
 
-function UpdateBookingModal({ spotId }) {
+function UpdateBookingModal({ bookingId }) {
   // Initializing stuff
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function UpdateBookingModal({ spotId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(createBookingThunk(form, spotId));
+    dispatch(updateBookingThunk(form, bookingId));
 
     return closeModal();
   };

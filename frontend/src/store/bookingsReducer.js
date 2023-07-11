@@ -37,6 +37,25 @@ export const getUserBookingsThunk = () => async (dispatch) => {
   const bookings = await response.json();
   dispatch(loadUserBookings(bookings));
 };
+
+//Update an existing booking
+export const updateBookingThunk = (form, bookingId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
+  console.log("response in thunk..........", response);
+  if (!response.ok) {
+    const errors = await response.json();
+    return errors;
+  } else {
+    const data = await response.json();
+    console.log("newly updated booking in thunk.............", data);
+    // dispatch(updateSpot(data));
+    return data;
+  }
+};
 // ---------- INITIAL STATE -------------
 const initialState = { user: {}, spot: {} };
 

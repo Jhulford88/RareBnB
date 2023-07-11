@@ -41,17 +41,17 @@ function MyBookingsPage() {
             </p>
             <p>
               <span className="check-in-out">Check-in</span> &nbsp;
-              {new Date(booking.startDate).toLocaleDateString("en-US")}
+              {new Date(booking.startDate).toDateString()}
             </p>
             <p>
               {" "}
               <span className="check-in-out">Check-out</span> &nbsp;
-              {new Date(booking.endDate).toLocaleDateString("en-US")}
+              {new Date(booking.endDate).toDateString()}
             </p>
             <OpenModalButton
               className="open-update-booking-modal-button"
               buttonText="Update"
-              modalComponent={<UpdateBookingModal />}
+              modalComponent={<UpdateBookingModal bookingId={booking.id} />}
             />
           </div>
         </div>
