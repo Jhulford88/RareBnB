@@ -1,3 +1,24 @@
 .booking-entry-container {
     border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    /* height: 100px; */
+}
+
+.open-delete-booking-modal-button {
+    height: 20px;
+    width: 70px;
+    cursor: pointer;
+}
+
+.spot-booking-entry-gallery {
+    display: flex;
+    flex-direction: row;
+}
+
+.booking-closed {
+    font-weight: bolder;
+    color: #FF385C;
 }

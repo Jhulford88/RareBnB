@@ -3,7 +3,7 @@ import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSpotBookingsThunk } from "../../store/bookingsReducer";
-import OpenModalButton from "../OpenModalButton";
+import OpenDeleteBookingModalButton from "../OpenDeleteBookingModalButton";
 import DeleteBookingModal from "../DeleteBookingModal";
 import "./SpotBookingsPage.css";
 
@@ -33,35 +33,40 @@ function SpotBookingsPage() {
     return (
       <li key={booking.id} className="booking-entry-container">
         <div>
+          <span className="check-in-out">Guest Name</span>&nbsp;
           {booking.User.firstName}&nbsp;{booking.User.lastName}
         </div>
         <div>
-          <span>Check-in</span>
-          {booking.startDate}
+          <span className="check-in-out">Check-in</span>&nbsp;
+          {new Date(booking.startDate).toDateString()}
         </div>
         <div>
-          <span>Check-out</span>
-          {booking.endDate}
+          <span className="check-in-out">Check-out</span>&nbsp;
+          {new Date(booking.endDate).toDateString()}
         </div>
-        <div>
-          <OpenModalButton
-            itemText="Delete"
-            modalComponent={
-              <DeleteBookingModal
-                bookingId={booking.id}
-                setIsUpdated={setIsUpdated}
-              />
-            }
-          />
-        </div>
+        {new Date() < new Date(booking.startDate).getTime() ? (
+          <div className="open-delete-booking-modal-button">
+            <OpenDeleteBookingModalButton
+              buttonText="Delete"
+              modalComponent={
+                <DeleteBookingModal
+                  bookingId={booking.id}
+                  setIsUpdated={setIsUpdated}
+                />
+              }
+            />
+          </div>
+        ) : (
+          <span className="booking-closed">BOOKING CLOSED</span>
+        )}
       </li>
     );
   });
 
   return (
-    <div className="spot-bookings-modal-container">
-      <h1>Hello from Spot Bookings Page</h1>
-      <ul>{bookingEntries}</ul>
+    <div className="spot-bookings-parent-container">
+      <h1>View Your Spot's Bookings</h1>
+      <ul className="spot-booking-entry-gallery">{bookingEntries}</ul>
     </div>
   );
 }
