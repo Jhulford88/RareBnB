@@ -10,6 +10,7 @@ import ManageSpotsPage from "./components/ManageSpotsPage/index";
 import UpdateSpotPage from "./components/UpdateSpotPage/index";
 import MyBookingsPage from "./components/MyBookingsPage";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
+import SpotBookingsPage from "./components/SpotBookingsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,11 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/spots/new" component={CreateSpotPage} />
           <Route exact path="/spots/current" component={ManageSpotsPage} />
+          <Route
+            exact
+            path="/spots/bookings/:spotId"
+            component={SpotBookingsPage}
+          />
           <Route exact path="/spots/:id/edit" component={UpdateSpotPage} />
           <Route exact path="/spots/:id" component={SpotDetailPage} />
           <Route exact path="/bookings/:id" component={MyBookingsPage} />

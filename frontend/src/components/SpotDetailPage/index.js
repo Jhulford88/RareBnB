@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { fetchSingleSpot } from "../../store/spotsReducer";
 import { fetchReportsThunk } from "../../store/reviewsReducer";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AddReviewModal from "../AddReviewModal/index";
 import DeleteReviewModal from "../DeleteReviewModal/index";
 import OpenBookingModalButton from "../OpenBookingModalButton";
+import SpotBookingsModal from "../SpotBookingsPage";
 import CreateBookingModal from "../CreateBookingModal";
 import "./SpotDetailPage.css";
 
@@ -14,6 +15,7 @@ function SpotDetailPage() {
   //Initialize Things
   const { id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //State
   const spot = useSelector((state) => state.spots.singleSpot);
@@ -27,6 +29,10 @@ function SpotDetailPage() {
     dispatch(fetchSingleSpot(id));
     dispatch(fetchReportsThunk(id));
   }, [dispatch, id]);
+
+  const handleClick = () => {
+    history.push(`/spots/bookings/${singleSpot.id}`);
+  };
 
   if (!singleSpot) return null;
   if (!reviewsArray) return null;
@@ -68,29 +74,39 @@ function SpotDetailPage() {
       </h2>
       <div className="description-and-reserve-box-container">
         <p className="description-text">{singleSpot.description}</p>
-        <div className="booking-box-container">
-          <p className="booking-container-price">
-            ${singleSpot.price}
-            <span className="just-night"> night</span>
-          </p>
-          <span className="booking-container-reviews">
-            <i className="fa-solid fa-star"></i>
-            {singleSpot.avgRating
-              ? singleSpot.avgRating.toFixed(2)
-              : "New"}{" "}
-            {singleSpot.numReviews
-              ? singleSpot.numReviews === 1
-                ? ` • ${singleSpot.numReviews} Review`
-                : ` • ${singleSpot.numReviews} Reviews`
-              : ""}
-          </span>
-          <div>
-            <OpenBookingModalButton
-              className="open-booking-modal-button"
-              buttonText="Reserve"
-              modalComponent={<CreateBookingModal spotId={singleSpot?.id} />}
-            />
-          </div>
+        <div className="booking-box-or-owner-container">
+          {sessionUser?.id && sessionUser?.id === singleSpot.ownerId ? (
+            <div className="booking-box-container">
+              <button onClick={handleClick}>View Bookings</button>
+            </div>
+          ) : (
+            <div className="booking-box-container">
+              <p className="booking-container-price">
+                ${singleSpot.price}
+                <span className="just-night"> night</span>
+              </p>
+              <span className="booking-container-reviews">
+                <i className="fa-solid fa-star"></i>
+                {singleSpot.avgRating
+                  ? singleSpot.avgRating.toFixed(2)
+                  : "New"}{" "}
+                {singleSpot.numReviews
+                  ? singleSpot.numReviews === 1
+                    ? ` • ${singleSpot.numReviews} Review`
+                    : ` • ${singleSpot.numReviews} Reviews`
+                  : ""}
+              </span>
+              <div>
+                <OpenBookingModalButton
+                  className="open-booking-modal-button"
+                  buttonText="Reserve"
+                  modalComponent={
+                    <CreateBookingModal spotId={singleSpot?.id} />
+                  }
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="review-summary-above-reviews-container">
