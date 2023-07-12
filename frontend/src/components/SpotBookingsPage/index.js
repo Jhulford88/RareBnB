@@ -38,11 +38,11 @@ function SpotBookingsPage() {
         </div>
         <div>
           <span className="check-in-out">Check-in</span>&nbsp;
-          {new Date(booking.startDate).toDateString()}
+          {new Date(booking.startDate).toUTCString().slice(0, 16)}
         </div>
         <div>
           <span className="check-in-out">Check-out</span>&nbsp;
-          {new Date(booking.endDate).toDateString()}
+          {new Date(booking.endDate).toUTCString().slice(0, 16)}
         </div>
         {new Date() < new Date(booking.startDate).getTime() ? (
           <div className="open-delete-booking-modal-button">

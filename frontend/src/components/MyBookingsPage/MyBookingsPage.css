@@ -61,3 +61,17 @@
 .booking-spot-name {
     font-weight: bolder;
 }
+
+.booking-spot-card-button-container {
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/*general class name given to open modal button component*/
+.open-modal-button {
+    background-color: gray;
+    color: white;
+}

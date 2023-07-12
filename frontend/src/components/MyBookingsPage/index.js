@@ -45,34 +45,41 @@ function MyBookingsPage() {
               {booking.Spot.city}, {booking.Spot.state}
             </p>
             <p>
-              <span className="check-in-out">Check-in</span> &nbsp;
-              {new Date(booking.startDate).toDateString()}
+              <span className="check-in-out">Check-in:</span> &nbsp;
+              {new Date(booking.startDate).toUTCString().slice(0, 16)}
             </p>
             <p>
               {" "}
-              <span className="check-in-out">Check-out</span> &nbsp;
-              {new Date(booking.endDate).toDateString()}
+              <span className="check-in-out">Check-out:</span> &nbsp;
+              {new Date(booking.endDate).toUTCString().slice(0, 16)}
             </p>
-            <OpenModalButton
-              className="open-update-booking-modal-button"
-              buttonText="Update"
-              modalComponent={
-                <UpdateBookingModal
-                  bookingId={booking.id}
-                  setIsUpdated={setIsUpdated}
+            {new Date() < new Date(booking.startDate).getTime() ? (
+              <div className="booking-spot-card-button-container">
+                <OpenModalButton
+                  className="open-update-booking-modal-button"
+                  buttonText="Update"
+                  modalComponent={
+                    <UpdateBookingModal
+                      bookingId={booking.id}
+                      setIsUpdated={setIsUpdated}
+                      booking={booking}
+                    />
+                  }
                 />
-              }
-            />
-            <OpenModalButton
-              className="open-delete-booking-modal-button"
-              buttonText="Delete"
-              modalComponent={
-                <DeleteBookingModal
-                  bookingId={booking.id}
-                  setIsUpdated={setIsUpdated}
+                <OpenModalButton
+                  className="open-delete-booking-modal-button"
+                  buttonText="Delete"
+                  modalComponent={
+                    <DeleteBookingModal
+                      bookingId={booking.id}
+                      setIsUpdated={setIsUpdated}
+                    />
+                  }
                 />
-              }
-            />
+              </div>
+            ) : (
+              <p className="booking-closed">BOOKING CLOSED</p>
+            )}
           </div>
         </div>
       </li>
