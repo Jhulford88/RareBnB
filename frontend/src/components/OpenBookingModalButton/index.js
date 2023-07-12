@@ -15,7 +15,11 @@ function OpenBookingModalButton({
     setModalContent(modalComponent);
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return (
+    <button className="open-booking-modal-button" onClick={onClick}>
+      {buttonText}
+    </button>
+  );
 }
 
 export default OpenBookingModalButton;

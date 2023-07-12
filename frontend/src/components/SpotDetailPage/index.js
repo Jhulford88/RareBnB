@@ -76,7 +76,7 @@ function SpotDetailPage() {
         <p className="description-text">{singleSpot.description}</p>
         <div className="booking-box-or-owner-container">
           {sessionUser?.id && sessionUser?.id === singleSpot.ownerId ? (
-            <div className="booking-box-container">
+            <div className="booking-box-container-view-bookings">
               <button onClick={handleClick}>View Bookings</button>
             </div>
           ) : (
@@ -96,7 +96,7 @@ function SpotDetailPage() {
                     : ` • ${singleSpot.numReviews} Reviews`
                   : ""}
               </span>
-              <div>
+              <div className="open-booking-modal-button-container">
                 <OpenBookingModalButton
                   className="open-booking-modal-button"
                   buttonText="Reserve"
@@ -139,7 +139,7 @@ function SpotDetailPage() {
       <ul className="review-list">
         {reviewsArray.reverse().map((review) => {
           return (
-            <li key={review.id}>
+            <li className="individual-review" key={review.id}>
               <h2 className="reviewer-name">{review.User.firstName}</h2>
               <h3 className="review-date">
                 {new Date(review.createdAt).toLocaleDateString("en-US", {

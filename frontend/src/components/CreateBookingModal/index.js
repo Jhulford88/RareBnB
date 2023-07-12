@@ -66,13 +66,15 @@ function CreateBookingModal({ spotId }) {
             className="end-date"
           />
         </label>
-        <button
-          type="submit"
-          className="post-review-button"
-          //   disabled={disabled}
-        >
-          Reserve
-        </button>
+        <div className="post-booking-button-container">
+          <button
+            type="submit"
+            className="post-booking-button"
+            //   disabled={disabled}
+          >
+            Reserve
+          </button>
+        </div>
       </form>
     </div>
   );
