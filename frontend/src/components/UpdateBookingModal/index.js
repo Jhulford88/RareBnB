@@ -53,7 +53,7 @@ function UpdateBookingModal({ bookingId, setIsUpdated, booking }) {
   };
 
   return (
-    <div className="review-modal-container">
+    <div className="booking-modal-container">
       <h1>Update your Reservation!</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -76,13 +76,15 @@ function UpdateBookingModal({ bookingId, setIsUpdated, booking }) {
             className="end-date"
           />
         </label>
-        <button
-          type="submit"
-          className="post-review-button"
-          //   disabled={disabled}
-        >
-          Reserve
-        </button>
+        <div className="post-booking-button-container">
+          <button
+            type="submit"
+            className="post-booking-button"
+            //   disabled={disabled}
+          >
+            Reserve
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -20,7 +20,7 @@ function Navigation({ isLoaded }) {
       {isLoaded && (
         <li>
           <NavLink
-            className="create-new-spot-link"
+            className="bookings-link"
             exact
             to={`/bookings/${sessionUser?.id}`}
           >

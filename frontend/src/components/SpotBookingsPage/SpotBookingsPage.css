@@ -5,12 +5,34 @@
     margin: 10px;
     padding: 10px;
     /* height: 100px; */
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-entry-contents {
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.booking-entry-contents-bottom {
+    /* border: 2px solid blue; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .open-delete-booking-modal-button {
     height: 20px;
     width: 70px;
     cursor: pointer;
+    /* border: 2px solid red; */
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .spot-booking-entry-gallery {
@@ -21,4 +43,15 @@
 .booking-closed {
     font-weight: bolder;
     color: #FF385C;
+    margin-top: 5px;
+}
+
+.no-res-h1-container {
+    /* border: 2px solid red; */
+    text-align: center;
+}
+
+.spot-bookings-parent-container {
+    /* border: 2px solid red; */
+    text-align: center;
 }

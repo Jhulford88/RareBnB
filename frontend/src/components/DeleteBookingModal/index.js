@@ -22,12 +22,24 @@ function DeleteBookingModal({ bookingId, setIsUpdated }) {
   };
 
   return (
-    <>
+    <div className="delete-booking-modal-parent">
       <h1>Confirm Delete</h1>
       <h2>Are you sure you want to delete this booking?</h2>
-      <button onClick={deleteBookingAction}>{"Yes (Delete Booking)"}</button>
-      <button onClick={closeDeleteBookingModal}>{"No (Keep Booking)"}</button>
-    </>
+      <div className="delete-booking-modal-buttons-container">
+        <button
+          className="delete-booking-modal-buttons"
+          onClick={deleteBookingAction}
+        >
+          {"Yes (Delete Booking)"}
+        </button>
+        <button
+          className="delete-booking-modal-buttons"
+          onClick={closeDeleteBookingModal}
+        >
+          {"No (Keep Booking)"}
+        </button>
+      </div>
+    </div>
   );
 }
 

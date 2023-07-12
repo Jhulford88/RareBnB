@@ -1,0 +1,23 @@
+.delete-booking-modal-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    /* border-radius: 20px; */
+}
+
+.delete-booking-modal-buttons-container {
+    /* border: 2px solid red; */
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+}
+
+.delete-booking-modal-buttons {
+    width: 150px;
+    height: 30px;
+    background-color: #FF385C;
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
