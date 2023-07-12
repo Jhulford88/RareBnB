@@ -1,0 +1,54 @@
+.footer-container {
+    height: 220px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid lightgray;
+}
+
+.footer-headers {
+    color: black;
+    font-size: 28px;
+}
+
+.footer-left {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 50px;
+}
+
+.footer-right {
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.name {
+    color: black;
+    font-size: 18px;
+}
+
+.fa-brands {
+    color: #FF385C;
+    font-size: 36px;
+
+}
+
+.link-container-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.link-container-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 70%;
+    padding-top: 55px;
+}

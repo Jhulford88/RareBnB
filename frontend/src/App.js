@@ -11,6 +11,7 @@ import UpdateSpotPage from "./components/UpdateSpotPage/index";
 import MyBookingsPage from "./components/MyBookingsPage";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 import SpotBookingsPage from "./components/SpotBookingsPage";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/bookings/:id" component={MyBookingsPage} />
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
