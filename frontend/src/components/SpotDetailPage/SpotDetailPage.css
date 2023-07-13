@@ -130,9 +130,9 @@
     width: 60%;
 }
 
-.review-summary-above-reviews {
+/* .review-summary-above-reviews {
     grid-column: span 1;
-}
+} */
 
 .review-summary-above-reviews-container {
     display: grid;
