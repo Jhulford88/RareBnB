@@ -131,6 +131,7 @@ function SpotDetailPage() {
                   <CreateBookingModal
                     spotId={singleSpot?.id}
                     singleSpot={singleSpot}
+                    sessionUser={sessionUser}
                   />
                 }
               </div>

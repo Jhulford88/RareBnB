@@ -98,3 +98,9 @@
     color: gray;
     margin-top: 0px;
 }
+
+.errors-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

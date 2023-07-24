@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
-// import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createBookingThunk } from "../../store/bookingsReducer";
 import "./CreateBookingModal.css";
 
-function CreateBookingModal({ spotId, singleSpot }) {
+function CreateBookingModal({ spotId, singleSpot, sessionUser }) {
   // Initializing stuff
-  // const { closeModal } = useModal();
   const dispatch = useDispatch();
-  // const history = useHistory();
+  const history = useHistory();
 
   // State
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState({});
-  //   const [disabled, setDisabled] = useState(true);
 
   // Building review object for thunk prop
   const form = {};
@@ -39,7 +36,7 @@ function CreateBookingModal({ spotId, singleSpot }) {
 
     dispatch(createBookingThunk(form, spotId));
 
-    return;
+    history.push(`/bookings/${sessionUser.id}`);
     // closeModal();
   };
 
@@ -62,7 +59,7 @@ function CreateBookingModal({ spotId, singleSpot }) {
         <div className="input-field-container">
           <div className="input-label-div-left">
             <label className="date-input-label">
-              CHECK-IN <span className="errors">{errors.startDate}</span>
+              CHECK-IN
               <input
                 type="date"
                 value={startDate}
@@ -74,7 +71,7 @@ function CreateBookingModal({ spotId, singleSpot }) {
           </div>
           <div className="input-label-div-right">
             <label className="date-input-label">
-              CHECK-OUT <span className="errors">{errors.endDate}</span>
+              CHECK-OUT
               <input
                 type="date"
                 value={endDate}
@@ -89,10 +86,15 @@ function CreateBookingModal({ spotId, singleSpot }) {
           <button
             type="submit"
             className="post-booking-button"
-            //   disabled={disabled}
+            // disabled={disabled}
           >
-            Reserve
+            {sessionUser ? "Reserve" : "Please log-in to reserve"}
+            {/* Reserve */}
           </button>
+        </div>
+        <div className="errors-container">
+          <span className="errors">{errors.startDate}</span>
+          <span className="errors">{errors.endDate}</span>
         </div>
       </form>
       <p className="wont-be-charged">you wont be charged yet</p>
