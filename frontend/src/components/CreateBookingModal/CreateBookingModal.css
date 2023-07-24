@@ -53,3 +53,48 @@
     padding: 5px;
     width: 40%;
 }
+
+.price-calculation-nights {
+    /* border: 2px solid green; */
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+}
+
+.price-calculation-cleaning {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+}
+
+.price-calculation-service {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+}
+
+.bar {
+    width: 90%;
+}
+
+.price-calculation-total {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wont-be-charged {
+    color: gray;
+    margin-top: 0px;
+}

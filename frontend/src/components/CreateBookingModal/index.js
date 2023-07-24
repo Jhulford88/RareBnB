@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { createBookingThunk } from "../../store/bookingsReducer";
 import "./CreateBookingModal.css";
 
-function CreateBookingModal({ spotId }) {
+function CreateBookingModal({ spotId, singleSpot }) {
   // Initializing stuff
   // const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -41,6 +41,19 @@ function CreateBookingModal({ spotId }) {
 
     return;
     // closeModal();
+  };
+
+  const dateHelper = () => {
+    let date1 = new Date(startDate);
+    let date2 = new Date(endDate);
+
+    // To calculate the time difference of two dates
+    let differenceInTime = date2.getTime() - date1.getTime();
+
+    // To calculate the no. of days between two dates
+    let differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+    return differenceInDays;
   };
 
   return (
@@ -82,7 +95,47 @@ function CreateBookingModal({ spotId }) {
           </button>
         </div>
       </form>
-      <p>you wont be charged yet</p>
+      <p className="wont-be-charged">you wont be charged yet</p>
+      <div className="price-calculation-nights">
+        <p>
+          ${singleSpot.price} x {startDate && endDate ? dateHelper() : 0} nights
+        </p>
+        <div>
+          $
+          {startDate && endDate
+            ? (singleSpot.price * dateHelper()).toFixed(2)
+            : 0}
+        </div>
+      </div>
+      <div className="price-calculation-cleaning">
+        <p>Cleaning Fee</p>
+        <div>
+          ${startDate && endDate ? (singleSpot.price * 0.5).toFixed(2) : 0}
+        </div>
+      </div>
+      <div className="price-calculation-service">
+        <p>Rarebnb Service Fee</p>
+        <div>
+          $
+          {startDate && endDate
+            ? (singleSpot.price * dateHelper() * 0.2).toFixed(2)
+            : 0}
+        </div>
+      </div>
+      <hr className="bar" />
+      <div className="price-calculation-total">
+        <p>Price before Taxes</p>
+        <div>
+          $
+          {startDate && endDate
+            ? (
+                singleSpot.price * dateHelper() +
+                singleSpot.price * 0.5 +
+                singleSpot.price * dateHelper() * 0.2
+              ).toFixed(2)
+            : 0}
+        </div>
+      </div>
     </div>
   );
 }

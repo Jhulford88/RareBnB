@@ -99,14 +99,12 @@ function SpotDetailPage() {
                 </span>
               </div>
               <div className="open-booking-modal-button-container">
-                {/* <OpenBookingModalButton
-                  className="open-booking-modal-button"
-                  buttonText="Reserve"
-                  modalComponent={
-                    <CreateBookingModal spotId={singleSpot?.id} />
-                  }
-                /> */}
-                {<CreateBookingModal spotId={singleSpot?.id} />}
+                {
+                  <CreateBookingModal
+                    spotId={singleSpot?.id}
+                    singleSpot={singleSpot}
+                  />
+                }
               </div>
             </div>
           )}
