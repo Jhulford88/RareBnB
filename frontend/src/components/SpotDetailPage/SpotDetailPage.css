@@ -77,7 +77,7 @@
 
 .booking-container-price {
     /* grid-column: span 2; */
-    font-size: 20px;
+    font-size: 25px;
     /* border: 1px solid blue; */
 }
 
@@ -102,12 +102,19 @@
     /* border: 2px solid red; */
 }
 
-.description-text {
+.highlights {
     grid-column: span 4;
+}
+
+.description-text {
+    /* grid-column: span 3; */
+    /* grid-row: 2; */
+    margin-right: 20px;
 }
 
 .just-night {
     font-size: 16px;
+    color: gray;
     /* border: 1px solid blue; */
 }
 
@@ -204,3 +211,31 @@
 /* .booking-box-or-owner-container {
     border: 2px solid blue;
 } */
+
+.fa-door-open,
+.fa-key,
+.fa-calendar-xmark {
+    font-size: 30px;
+    color: gray;
+}
+
+.highlights-individual {
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    padding-top: 10px;
+}
+
+.free-cancellations {
+    padding-left: 10px;
+}
+
+.highlights-bar {
+    margin-right: 40px;
+    color: gray;
+}
+
+.lower-text {
+    color: gray;
+}

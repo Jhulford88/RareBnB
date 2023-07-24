@@ -73,7 +73,35 @@ function SpotDetailPage() {
         Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}{" "}
       </h2>
       <div className="description-and-reserve-box-container">
-        <p className="description-text">{singleSpot.description}</p>
+        <div className="highlights">
+          <hr className="highlights-bar" />
+          <div className="highlights-individual">
+            <i class="fa-solid fa-door-open"></i>
+            <div className="check-yourself-in">
+              <p>Self check-in</p>
+              <p className="lower-text">Check yourself in with the keypad</p>
+            </div>
+          </div>
+          <div className="highlights-individual">
+            <i class="fa-solid fa-key"></i>
+            <div className="check-yourself-in">
+              <p>Great check-in experience</p>
+              <p className="lower-text">
+                100% of recent guests gave the check-in process a good rating
+              </p>
+            </div>
+          </div>
+          <div className="highlights-individual">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <div className="check-yourself-in">
+              <p className="free-cancellations">
+                Free cancellations for 48 hours
+              </p>
+            </div>
+          </div>
+          <hr className="highlights-bar" />
+          <p className="description-text">{singleSpot.description}</p>
+        </div>
         <div className="booking-box-or-owner-container">
           {sessionUser?.id && sessionUser?.id === singleSpot.ownerId ? (
             <div className="booking-box-container-view-bookings">
