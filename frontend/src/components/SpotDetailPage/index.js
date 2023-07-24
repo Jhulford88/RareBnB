@@ -81,29 +81,32 @@ function SpotDetailPage() {
             </div>
           ) : (
             <div className="booking-box-container">
-              <p className="booking-container-price">
-                ${singleSpot.price}
-                <span className="just-night"> night</span>
-              </p>
-              <span className="booking-container-reviews">
-                <i className="fa-solid fa-star"></i>
-                {singleSpot.avgRating
-                  ? singleSpot.avgRating.toFixed(2)
-                  : "New"}{" "}
-                {singleSpot.numReviews
-                  ? singleSpot.numReviews === 1
-                    ? ` • ${singleSpot.numReviews} Review`
-                    : ` • ${singleSpot.numReviews} Reviews`
-                  : ""}
-              </span>
+              <div className="booking-box-container-upper">
+                <p className="booking-container-price">
+                  ${singleSpot.price}
+                  <span className="just-night"> night</span>
+                </p>
+                <span className="booking-container-reviews">
+                  <i className="fa-solid fa-star"></i>
+                  {singleSpot.avgRating
+                    ? singleSpot.avgRating.toFixed(2)
+                    : "New"}{" "}
+                  {singleSpot.numReviews
+                    ? singleSpot.numReviews === 1
+                      ? ` • ${singleSpot.numReviews} Review`
+                      : ` • ${singleSpot.numReviews} Reviews`
+                    : ""}
+                </span>
+              </div>
               <div className="open-booking-modal-button-container">
-                <OpenBookingModalButton
+                {/* <OpenBookingModalButton
                   className="open-booking-modal-button"
                   buttonText="Reserve"
                   modalComponent={
                     <CreateBookingModal spotId={singleSpot?.id} />
                   }
-                />
+                /> */}
+                {<CreateBookingModal spotId={singleSpot?.id} />}
               </div>
             </div>
           )}
