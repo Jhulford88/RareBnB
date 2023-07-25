@@ -69,11 +69,19 @@ function SpotDetailPage() {
           } else return null;
         })}
       </div>
-      <h2>
-        Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}{" "}
-      </h2>
       <div className="description-and-reserve-box-container">
         <div className="highlights">
+          <div className="owner-name-and-image-container">
+            <h2 className="hosted-by">
+              Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}{" "}
+            </h2>
+            <div className="spot-detail-profile-image-container">
+              <img
+                className="spot-detail-profile-image"
+                src={singleSpot.Owner.image}
+              />
+            </div>
+          </div>
           <hr className="highlights-bar" />
           <div className="highlights-individual">
             <i class="fa-solid fa-door-open"></i>
