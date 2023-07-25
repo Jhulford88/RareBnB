@@ -59,11 +59,13 @@ function ProfileButton({ user }) {
           <div className="dropdown-greeting-text">
             <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
+            <hr className="profile-bar" />
             <li>
               <NavLink exact to="/spots/current" className="manage-spots-link">
                 Manage Spots
               </NavLink>
             </li>
+            <hr className="profile-bar" />
             <li>
               <button className="log-out-button" onClick={logout}>
                 Log Out
