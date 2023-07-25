@@ -178,13 +178,23 @@ function SpotDetailPage() {
         {reviewsArray.reverse().map((review) => {
           return (
             <li className="individual-review" key={review.id}>
-              <h2 className="reviewer-name">{review.User.firstName}</h2>
-              <h3 className="review-date">
-                {new Date(review.createdAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                })}
-              </h3>
+              <div className="review-name-date-image-container">
+                <div>
+                  <img
+                    className="spot-detail-reviewer-image"
+                    src={review.User.image}
+                  />
+                </div>
+                <div className="review-name-date">
+                  <h2 className="reviewer-name">{review.User.firstName}</h2>
+                  <h3 className="review-date">
+                    {new Date(review.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                    })}
+                  </h3>
+                </div>
+              </div>
               <p>{review.review}</p>
               {review.userId === sessionUser?.id ? (
                 <button className="delete-button">
