@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from './OpenModalMenuItem';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./Navigation.css";
 
@@ -12,6 +12,7 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const history = useHistory();
+  // const user = useSelector((state) => state.session.user);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -27,7 +28,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -38,7 +39,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    history.push('/')
+    history.push("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -47,16 +48,26 @@ function ProfileButton({ user }) {
     <>
       <button onClick={openMenu} className="header-dropdown-button">
         <i className="fa-solid fa-bars"></i>
-        <i className="fas fa-user-circle" />
+        {user ? (
+          <img className="profile-image" src={user?.image} />
+        ) : (
+          <i className="fas fa-user-circle" />
+        )}
       </button>
       <ul className={ulClassName} ref={ulRef} id="test">
         {user ? (
           <div className="dropdown-greeting-text">
-            <li>Hello, { user.firstName }</li>
-            <li>{ user.email }</li>
-            <li><NavLink exact to="/spots/current" className="manage-spots-link">Manage Spots</NavLink></li>
+            <li>Hello, {user.firstName}</li>
+            <li>{user.email}</li>
             <li>
-              <button className="log-out-button"onClick={logout}>Log Out</button>
+              <NavLink exact to="/spots/current" className="manage-spots-link">
+                Manage Spots
+              </NavLink>
+            </li>
+            <li>
+              <button className="log-out-button" onClick={logout}>
+                Log Out
+              </button>
             </li>
           </div>
         ) : (

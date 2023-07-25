@@ -21,19 +21,27 @@
     font-size: 24px;
 }
 
+.profile-image {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
 .header-dropdown-button {
     align-items: center;
-    border: 1px;
-    border-radius: 25px;
-    border-style: solid;
+    /* border: 1px; */
+    /* border-radius: 25px; */
+    /* border-style: solid; */
+    border: none;
     display: flex;
-    height: 35px;
+    height: 40px;
     justify-content: center;
     padding: 10px;
     position: absolute;
     right: 50px;
     top: 20px;
     width: 80px;
+    background-color: white;
 }
 
 .header-dropdown-button:hover {
