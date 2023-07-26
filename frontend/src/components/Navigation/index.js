@@ -120,6 +120,7 @@ function Navigation({ isLoaded }) {
           </div>
         </NavLink>
       </ul>
+      {/* <hr className="categories-bar" /> */}
     </div>
   );
 }

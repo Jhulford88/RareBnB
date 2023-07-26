@@ -54,9 +54,10 @@
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    /* border-bottom: .5px solid gray; */
+    border-bottom: .5px solid gray;
     height: 70px;
     /* position: fixed; */
+    margin-bottom: 25px;
 
 }
 
@@ -66,10 +67,11 @@
     justify-content: space-around;
     align-items: center;
     list-style: none;
-    /* border-bottom: .5px solid gray; */
+    border-bottom: .5px solid gray;
     height: 40px;
     /* position: fixed; */
     /* border: 2px solid red; */
+    padding-bottom: 10px;
 }
 
 .hidden {
@@ -153,7 +155,7 @@
     font-size: 12px;
 }
 
-.navbar-bar {
-    width: 97%;
-
-}
+/* .categories-bar {
+    color: red;
+    size: 5px;
+} */
