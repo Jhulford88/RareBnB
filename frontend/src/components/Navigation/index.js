@@ -34,68 +34,91 @@ function Navigation({ isLoaded }) {
           </li>
         )}
       </ul>
-
       <ul className="subheader-ul">
-        <div className="icon-container">
-          <i class="fa-solid fa-house">
-            <p className="icon-text">Houses</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-building">
-            <p className="icon-text">Apartments</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-cow">
-            <p className="icon-text">Farms</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-ship">
-            <p className="icon-text">Boats</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-leaf">
-            <p className="icon-text">Earthships</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-person-shelter">
-            <p className="icon-text">Tiny Homes</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-tree">
-            <p className="icon-text">Tree Houses</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-campground">
-            <p className="icon-text">A-Frames</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-table-cells-large">
-            <p className="icon-text">Containers</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-landmark-dome">
-            <p className="icon-text">Domes</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-tent">
-            <p className="icon-text">Yurts</p>
-          </i>
-        </div>
-        <div className="icon-container">
-          <i class="fa-solid fa-igloo">
-            <p className="icon-text">Other</p>
-          </i>
-        </div>
+        <NavLink exact to="/spots/categories/house">
+          <div className="icon-container">
+            <i class="fa-solid fa-house">
+              <p className="icon-text">Houses</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/apartment">
+          <div className="icon-container">
+            <i class="fa-solid fa-building">
+              <p className="icon-text">Apartments</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/barn">
+          <div className="icon-container">
+            <i class="fa-solid fa-cow">
+              <p className="icon-text">Barns</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/boat">
+          <div className="icon-container">
+            <i class="fa-solid fa-ship">
+              <p className="icon-text">Boats</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/earthship">
+          <div className="icon-container">
+            <i class="fa-solid fa-leaf">
+              <p className="icon-text">Earthships</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/tinyhome">
+          <div className="icon-container">
+            <i class="fa-solid fa-person-shelter">
+              <p className="icon-text">Tiny Homes</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/treehouse">
+          <div className="icon-container">
+            <i class="fa-solid fa-tree">
+              <p className="icon-text">Tree Houses</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/a-frame">
+          <div className="icon-container">
+            <i class="fa-solid fa-campground">
+              <p className="icon-text">A-Frames</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/container">
+          <div className="icon-container">
+            <i class="fa-solid fa-table-cells-large">
+              <p className="icon-text">Containers</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/dome">
+          <div className="icon-container">
+            <i class="fa-solid fa-landmark-dome">
+              <p className="icon-text">Domes</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/yurt">
+          <div className="icon-container">
+            <i class="fa-solid fa-tent">
+              <p className="icon-text">Yurts</p>
+            </i>
+          </div>
+        </NavLink>
+        <NavLink exact to="/spots/categories/other">
+          <div className="icon-container">
+            <i class="fa-solid fa-igloo">
+              <p className="icon-text">Other</p>
+            </i>
+          </div>
+        </NavLink>
       </ul>
     </div>
   );

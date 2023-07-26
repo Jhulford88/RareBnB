@@ -122,6 +122,13 @@ export const deleteSpotThunk = (id) => async (dispatch) => {
   }
 };
 
+export const fetchSpotsByCategoryThunk = (category) => async (dispatch) => {
+  const response = await fetch(`/api/spots/categories/${category}`);
+  const spots = await response.json();
+  console.log("spots returned from backend.............", spots);
+  dispatch(loadSpots(spots));
+};
+
 //<----------Initial State--------------->
 const initState = { allSpots: {}, singleSpot: {} };
 

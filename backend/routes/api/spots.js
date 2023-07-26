@@ -177,7 +177,7 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Spots: spotList });
 });
 
-//get details of a spot from an ID
+//Get details of a spot from an ID
 router.get("/:spotId", async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, {
     include: [
@@ -359,6 +359,55 @@ router.get("", async (req, res) => {
   });
 
   res.json({ Spots: spotList, page, size });
+});
+
+//Get all spots by category
+router.get("/categories/:category", async (req, res) => {
+  console.log(
+    "hello from backend..............................................."
+  );
+  console.log(
+    "category in the backend...........................",
+    req.params.category
+  );
+  let query = {
+    where: {
+      type: req.params.category,
+    },
+    include: [{ model: Review }, { model: SpotImage }],
+  };
+
+  const spots = await Spot.findAll(query);
+
+  let spotList = [];
+
+  spots.forEach((spot) => {
+    spotList.push(spot.toJSON());
+  });
+
+  spotList.forEach((spot) => {
+    let sum = 0;
+    spot.Reviews.forEach((review) => {
+      sum += review.stars;
+    });
+    spot.avgRating = sum / spot.Reviews.length;
+
+    delete spot.Reviews;
+  });
+
+  spotList.forEach((spot) => {
+    spot.SpotImages.forEach((image) => {
+      if (image.preview === true) {
+        spot.previewImage = image.url;
+      }
+    });
+    if (!spot.previewImage) {
+      spot.previewImage = "No image found";
+    }
+    delete spot.SpotImages;
+  });
+
+  res.json({ Spots: spotList });
 });
 
 //Create a Booking from Spot based on the Spot's ID

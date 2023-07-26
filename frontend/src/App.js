@@ -12,6 +12,7 @@ import MyBookingsPage from "./components/MyBookingsPage";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 import SpotBookingsPage from "./components/SpotBookingsPage";
 import Footer from "./components/Footer";
+import CategoriesPage from "./components/CategoriesPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,11 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/spots/new" component={CreateSpotPage} />
+          <Route
+            exact
+            path="/spots/categories/:category"
+            component={CategoriesPage}
+          />
           <Route exact path="/spots/current" component={ManageSpotsPage} />
           <Route
             exact
