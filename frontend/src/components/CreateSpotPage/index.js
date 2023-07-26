@@ -20,10 +20,20 @@ function CreateSpotPage() {
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
   const [errors, setErrors] = useState({});
+  const [type, setType] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const form = { country, address, city, state, description, name, price };
+  const form = {
+    country,
+    address,
+    city,
+    state,
+    description,
+    name,
+    price,
+    type,
+  };
 
   //conditionally add all photos to an array
   const imageArr = [];
@@ -37,6 +47,8 @@ function CreateSpotPage() {
     e.preventDefault();
 
     const newErrors = {};
+    if (type.length < 1)
+      newErrors["type"] = "Please select a type for your spot";
     if (country.length < 1) newErrors["country"] = "Country is required";
     if (address.length < 1) newErrors["address"] = "Address is required";
     if (city.length < 1) newErrors["city"] = "City is required";
@@ -87,6 +99,7 @@ function CreateSpotPage() {
     if (!Object.keys(newErrors).length) {
       const newSpot = await dispatch(createSpot(form, imageArr, sessionUser));
 
+      setType("");
       setCountry("");
       setAddress("");
       setCity("");
@@ -104,13 +117,11 @@ function CreateSpotPage() {
     }
   };
 
-  //set disabled logic here
-
-  // useEffect(() => {
-
-  //     if(country.length > 1 && address.length > 1 && city.length > 1 && state.length > 1 && description.length > 30 && name.length > 1 && price.length > 1 && previewImage.length > 1) setIsDisabled(false)
-
-  //   }, [isDisabled, country, address, city, state, description, name, price, previewImage, image1, image2, image3, image4])
+  //Handles setting state for radio buttons
+  const handleChange = (event) => {
+    setType(event.target.value);
+  };
+  // console.log("this is the type..........", type);
 
   return (
     <div className="form-container">
@@ -171,6 +182,181 @@ function CreateSpotPage() {
             onChange={(e) => setDescription(e.target.value)}
           />
           <span className="errors">{errors.description}</span>
+
+          <div className="radio-button-section">
+            <h3>Please select one which best describes your place</h3>
+
+            <div className="radio-input">
+              <label for="house">
+                House
+                <input
+                  type="radio"
+                  id="house"
+                  name="poperty-type"
+                  value="house"
+                  checked={type === "house"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="apartment">
+                Apartment
+                <input
+                  type="radio"
+                  id="apartment"
+                  name="poperty-type"
+                  value="house"
+                  checked={type === "apartment"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="barn">
+                Barn
+                <input
+                  type="radio"
+                  id="barn"
+                  name="poperty-type"
+                  value="barn"
+                  checked={type === "barn"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="boat">
+                Boat
+                <input
+                  type="radio"
+                  id="boat"
+                  name="poperty-type"
+                  value="boat"
+                  checked={type === "boat"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="earthship">
+                Earthship
+                <input
+                  type="radio"
+                  id="earthship"
+                  name="poperty-type"
+                  value="earthship"
+                  checked={type === "earthship"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="tinyhouse">
+                Tiny House
+                <input
+                  type="radio"
+                  id="tinyhouse"
+                  name="poperty-type"
+                  value="tinyhouse"
+                  checked={type === "tinyhouse"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="treehouse">
+                Treehouse
+                <input
+                  type="radio"
+                  id="treehouse"
+                  name="poperty-type"
+                  value="treehouse"
+                  checked={type === "treehouse"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="cabin">
+                Cabin
+                <input
+                  type="radio"
+                  id="cabin"
+                  name="poperty-type"
+                  value="cabin"
+                  checked={type === "cabin"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="a-frame">
+                A-Frame
+                <input
+                  type="radio"
+                  id="a-frame"
+                  name="poperty-type"
+                  value="a-frame"
+                  checked={type === "a-frame"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="container">
+                Container
+                <input
+                  type="radio"
+                  id="container"
+                  name="poperty-type"
+                  value="container"
+                  checked={type === "container"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="dome">
+                Dome
+                <input
+                  type="radio"
+                  id="dome"
+                  name="poperty-type"
+                  value="dome"
+                  checked={type === "dome"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="yurt">
+                Yurt
+                <input
+                  type="radio"
+                  id="yurt"
+                  name="poperty-type"
+                  value="yurt"
+                  checked={type === "yurt"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className="radio-input">
+              <label for="other">
+                Other
+                <input
+                  type="radio"
+                  id="other"
+                  name="poperty-type"
+                  value="other"
+                  checked={type === "other"}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+          </div>
+          <span className="errors">{errors.type}</span>
         </div>
         <div className="form-section-3">
           <h3>Create a title for your spot</h3>

@@ -1,7 +1,7 @@
-//imports
+//<----------Imports--------------->
 import { csrfFetch } from "./csrf";
 
-//action type constants
+//<----------Action Type Constants--------------->
 export const LOAD_SPOTS = "spots/LOAD_SPOTS";
 export const LOAD_SINGLE_SPOT = "spots/LOAD_SINGLE_SPOT";
 export const CREATE_SPOT = "spots/CREATE_SPOT";
@@ -38,7 +38,7 @@ export const deleteSpot = (id) => ({
   id,
 });
 
-//thunks
+//<----------Thunks--------------->
 export const fetchSpots = () => async (dispatch) => {
   const response = await fetch("/api/spots");
   const spots = await response.json();
@@ -46,11 +46,8 @@ export const fetchSpots = () => async (dispatch) => {
 };
 
 export const fetchSingleSpot = (spotId) => async (dispatch) => {
-  // console.log('spot id in thunk....................',spotId)
   const response = await fetch(`/api/spots/${spotId}`);
-  // console.log('response in thunk..........', response)
   const spot = await response.json();
-  // console.log('single spot in thunk.......', spot)
   dispatch(loadSingleSpot(spot));
   return spot;
 };
@@ -101,13 +98,11 @@ export const updateExistingSpot =
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
-    // console.log('response in thunk..........', response)
     if (!response.ok) {
       const errors = await response.json();
       return errors;
     } else {
       const data = await response.json();
-      // console.log('newly updated spot in thunk.............', data)
       dispatch(updateSpot(data));
       return data;
     }
@@ -115,27 +110,22 @@ export const updateExistingSpot =
 
 //Delete a spot
 export const deleteSpotThunk = (id) => async (dispatch) => {
-  // console.log("Hello from thunk.........")
   const response = await csrfFetch(`/api/spots/${id}`, {
     method: "DELETE",
   });
-  // console.log("response in thunk...............",response)
   if (!response.ok) {
     const errors = await response.json();
-    // console.log('errors in thunjk.......',errors)
     return errors;
   } else {
-    // console.log('response in thunk.......',response)
     const data = await response.json();
-    // console.log('dat in thunk............', data)
     dispatch(deleteSpot(id));
   }
 };
 
-//initial state
+//<----------Initial State--------------->
 const initState = { allSpots: {}, singleSpot: {} };
 
-// spotsReducer
+//<----------Reducer--------------->
 const spotsReducer = (state = initState, action) => {
   const spotsState = {
     ...state,
@@ -167,35 +157,11 @@ const spotsReducer = (state = initState, action) => {
       spotsState.singleSpot = action.updatedSpot;
       return spotsState;
     case DELETE_SPOT:
-      // console.log('all spots in the reducer..............',spotsState.allSpots)
       delete spotsState.allSpots[action.id];
       return spotsState;
     default:
       return state;
   }
 };
-
-// const spotsReducer = (state = initState, action) => {
-//     const spotsState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
-//     switch (action.type) {
-//         case LOAD_SPOTS:
-//             const updatedSpots = {}
-//             action.spots.Spots.forEach(spot => {
-//                 updatedSpots[spot.id] = spot;
-//             });
-//             spotsState.allSpots = updatedSpots
-//             return spotsState
-//         case LOAD_SINGLE_SPOT:
-//             spotsState.singleSpot[action.spot.id] = action.spot;
-//             return spotsState
-//         case POST_SPOT_IMAGE:
-//             return {...state, singleSpot:{SpotImages: [...state.singleSpot.SpotImages, action.spotImage]}}
-//         case UPDATE_SPOT:
-//             spotsState.allSpots[action.updatedSpot.id] = action.updatedSpot
-//             console.log('updated spot in reducer.......', spotsState.allSpots)
-//             return spotsState
-//         default:
-//             return state;
-//     }
 
 export default spotsReducer;
