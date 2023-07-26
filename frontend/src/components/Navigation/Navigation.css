@@ -54,9 +54,22 @@
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    border-bottom: .5px solid gray;
+    /* border-bottom: .5px solid gray; */
     height: 70px;
     /* position: fixed; */
+
+}
+
+.subheader-ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    /* border-bottom: .5px solid gray; */
+    height: 40px;
+    /* position: fixed; */
+    /* border: 2px solid red; */
 }
 
 .hidden {
@@ -103,4 +116,44 @@
 
 .manage-spots-link {
     color: teal;
+}
+
+.icon-container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    font-size: 12px;
+    /* border: 2px solid red; */
+    padding: 10px;
+}
+
+.fa-house,
+.fa-building,
+.fa-cow,
+.fa-ship,
+.fa-leaf,
+.fa-person-shelter,
+.fa-tree,
+.fa-campground,
+.fa-table-cells-large,
+.fa-landmark-dome,
+.fa-tent,
+.fa-igloo {
+    font-size: 30px;
+    /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-text {
+    font-size: 12px;
+}
+
+.navbar-bar {
+    width: 97%;
+
 }
