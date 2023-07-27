@@ -137,6 +137,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 router.delete("/:bookingId", requireAuth, async (req, res) => {
   const { user } = req;
 
+  console.log("user in backend.....", user);
   const booking = await Booking.findByPk(req.params.bookingId, {
     include: { model: Spot },
   });

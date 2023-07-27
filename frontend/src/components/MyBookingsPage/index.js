@@ -53,7 +53,7 @@ function MyBookingsPage() {
               <span className="check-in-out">Check-out:</span> &nbsp;
               {new Date(booking.endDate).toUTCString().slice(0, 16)}
             </p>
-            {new Date() < new Date(booking.startDate).getTime() ? (
+            {Date.now() <= new Date(booking.startDate).getTime() - 86400000 ? (
               <div className="booking-spot-card-button-container">
                 <OpenModalButton
                   className="open-update-booking-modal-button"

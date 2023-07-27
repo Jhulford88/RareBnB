@@ -72,14 +72,14 @@ export const updateBookingThunk = (form, bookingId) => async (dispatch) => {
 
 //Delete a booking
 export const deleteBookingThunk = (bookingId) => async (dispatch) => {
-  // console.log("Hello from thunk.........")
+  console.log("Hello from thunk.........");
   const response = await csrfFetch(`/api/bookings/${bookingId}`, {
     method: "DELETE",
   });
-  // console.log("response in thunk...............",response)
+  console.log("response in thunk...............", response);
   if (!response.ok) {
     const errors = await response.json();
-    // console.log('errors in thunjk.......',errors)
+    console.log("errors in thunjk.......", errors);
     return errors;
   } else {
     // console.log('response in thunk.......',response)
